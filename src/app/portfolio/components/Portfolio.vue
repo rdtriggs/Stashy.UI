@@ -64,7 +64,7 @@
       <div class="modal-body">
         <div class="form-group">
           <label>Asset</label>
-          <q-select type="list" v-model="asset.id" :options="assetOptions"></q-select>
+          <q-select type="list" v-model="asset.id" :options="assetOptions" @input="check()"></q-select>
         </div>
         <div class="form-group">
           <label>Amount</label>
@@ -115,6 +115,17 @@
         this.$data.asset.amount = asset[0].amount
         this.$data.asset.edit = true
         this.$refs.assetModal.open()
+      },
+      check () {
+        let asset = this.assets.filter(e => e.id === this.$data.asset.id)
+
+        if (asset.length > 0) {
+          this.$data.asset.edit = true
+
+          if (this.$data.asset.amount === null || this.$data.asset.amount.length === 0) {
+            this.$data.asset.amount = asset[0].amount
+          }
+        }
       },
       resetAssetModal () {
         this.$data.asset.id = null
