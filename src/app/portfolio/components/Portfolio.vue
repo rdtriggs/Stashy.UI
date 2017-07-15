@@ -21,7 +21,7 @@
                 </li>
               </ul>
               <hr>
-              <div class="last-updated">Last updated never ago</div>
+              <div class="last-update">Last updated {{ tickerLastUpdate }}</div>
             </div>
           </div>
         </div>
@@ -70,6 +70,7 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
+  import moment from 'moment'
   import { formatLongCurrency, formatStandardCurrency, formatShortCurrency } from '../../core/utils'
 
   export default {
@@ -313,9 +314,18 @@
 
         return formatStandardCurrency(value)
       },
+      tickerLastUpdate () {
+        let value = 'forever ago'
+
+        if (this.cached !== undefined) {
+          value = moment(this.cached).fromNow()
+        }
+
+        return value
+      },
       ...mapState({
         tickers: state => state.core.tickers.tickers,
-        portfolio: state => state.core.portfolio,
+        cached: state => state.core.tickers.cached,
         assets: state => state.portfolio.assets
       })
     }
