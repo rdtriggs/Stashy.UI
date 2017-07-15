@@ -8,6 +8,8 @@ require(`./themes/app.${__THEME}.styl`)
 
 import Vue from 'vue'
 import axios from 'axios'
+import lodash from 'lodash'
+import VueLodash from 'vue-lodash/dist/vue-lodash.min'
 import VueAxios from 'vue-axios'
 import Quasar from 'quasar'
 import localforage from 'localforage'
@@ -15,8 +17,9 @@ require('localforage-startswith')
 import router from './router'
 import store from './store'
 
-// configure axios
+// register plugins
 Vue.use(VueAxios, axios)
+Vue.use(VueLodash, lodash)
 
 localforage.config({
   name: 'stashy'
