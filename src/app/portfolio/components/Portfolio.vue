@@ -21,8 +21,11 @@
       </div>
       <q-data-table :data="tableData" :config="tableConfig" :columns="tableColumns" class="st-data-table">
         <template slot="selection" scope="selection">
-          <button class="primary clear" @click="edit(selection)">
+          <button class="primary clear" @click="editAsset(selection)">
             <i>edit</i>
+          </button>
+          <button class="primary clear" @click="deleteAsset(selection)">
+            <i>delete</i>
           </button>
         </template>
       </q-data-table>
@@ -42,7 +45,7 @@
       <div class="modal-body">
         <div class="form-group">
           <label>Asset</label>
-          <q-select type="list" v-model="asset.id" :options="assetOptions" @input="check()"></q-select>
+          <q-select type="list" v-model="asset.id" :options="assetOptions" @input="checkAsset()"></q-select>
         </div>
         <div class="form-group">
           <label>Amount</label>
@@ -52,7 +55,7 @@
       </div>
       <div class="modal-buttons row">
         <button class="negative clear" @click="$refs.assetModal.close()">Cancel</button>
-        <button class="primary" @click="add()">Save</button>
+        <button class="primary" @click="addAsset()">Save</button>
       </div>
     </q-modal>
   </div>
@@ -70,6 +73,7 @@
           amount: null,
           edit: false
         },
+        tableCache: [],
         tableConfig: {
           rowHeight: '50px',
           title: 'Portfolio',
@@ -145,16 +149,16 @@
       }
     },
     methods: {
-      add () {
+      addAsset () {
         if (this.$data.asset.id === null || this.$data.asset.id === '' || this.$data.asset.amount === null || isNaN(this.$data.asset.amount)) {
           alert('wtf')
           return
         }
-        this.addAsset({id: this.$data.asset.id, amount: this.$data.asset.amount})
+        this.save({id: this.$data.asset.id, amount: this.$data.asset.amount})
         this.$refs.assetModal.close()
         this.resetAssetModal()
       },
-      edit (selection) {
+      editAsset (selection) {
         if (selection.rows.length !== 1) {
           return
         }
@@ -170,7 +174,21 @@
         this.$data.asset.edit = true
         this.$refs.assetModal.open()
       },
-      check () {
+      deleteAsset (selection) {
+        if (selection.rows.length !== 1) {
+          return
+        }
+
+        let asset = this.assets.filter(e => e.id === selection.rows[0].data.id)
+
+        if (asset.length === 0) {
+          return
+        }
+
+        // this will remove the asset
+        this.save({id: asset[0].id, amount: 0})
+      },
+      checkAsset () {
         let asset = this.assets.filter(e => e.id === this.$data.asset.id)
 
         if (asset.length > 0) {
@@ -186,10 +204,10 @@
         this.$data.asset.amount = null
         this.$data.asset.edit = false
       },
-      ...mapActions([
-        'loadAssets',
-        'addAsset'
-      ])
+      ...mapActions({
+        load: 'loadAssets',
+        save: 'addAsset'
+      })
     },
     computed: {
       assetOptions () {
@@ -212,16 +230,20 @@
         return options
       },
       tableData () {
-        let data = []
-
         if (this.assets !== undefined && this.tickers !== undefined) {
+          let updated = []
+
           for (let i = 0; i < this.assets.length; i++) {
-            let ticker = this.tickers.filter(e => e.id === this.assets[i].id)
+            let ticker = this.tickers.filter(item => item.id === this.assets[i].id)
             if (ticker.length === 0) {
               continue
             }
 
-            data.push({
+            // tag updated record
+            updated.push({id: ticker[0].id})
+
+            let assetIndex = this.$data.tableCache.findIndex(item => item.id === this.assets[i].id)
+            let assetMap = {
               id: ticker[0].id,
               name: ticker[0].name,
               price_usd: ticker[0].price_usd,
@@ -230,11 +252,24 @@
               value_usd: ticker[0].price_usd * this.assets[i].amount,
               value_btc: ticker[0].price_btc * this.assets[i].amount,
               percent_change: ticker[0].percent_change_24h
-            })
+            }
+
+            if (assetIndex !== -1) {
+              this.$data.tableCache[assetIndex] = assetMap
+            }
+            else {
+              this.$data.tableCache.push(assetMap)
+            }
           }
+
+          if (updated.length < this.$data.tableCache.length) {
+            this.$data.tableCache = this._.intersectionBy(this.$data.tableCache, updated, 'id')
+          }
+
+          this.$data.tableCache = Object.assign([], this.$data.tableCache)
         }
 
-        return data
+        return this.$data.tableCache
       },
       portfolioValueUsd () {
         let value = 0
