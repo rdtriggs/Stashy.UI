@@ -85,15 +85,74 @@ body
   font-size: 3.4rem
   font-weight: 200
 
+.st-card-summary
+  @extends .card
+  background-color: $primary-light
+
+.st-card-summary .card-title
+  font-weight: 300
+  color: white
+  background-color: $primary
+  padding: 14px 8px
+
+.st-card-summary .card-title span
+  float: right
+  font-size: 1.1rem
+
+.st-card-summary .card-content
+  color: $light
+
+.st-card-summary .card-content ul
+  list-style: none
+  margin: 0
+  padding: 0
+
+.st-card-summary .card-content ul li
+  margin-bottom: 13px
+
+  &:last-child
+    margin-bottom: 0
+
+  &:before
+    color: rgba(255, 255, 255, 0.4)
+    font-family: 'Material Icons'
+    content: '\E8B0'
+    font-size: 2.4em
+    float: left
+    margin-right: 16px
+
+.st-card-summary .card-content ul li.money:before
+  content: '\E227'
+
+.st-card-summary .card-content ul li.wallet:before
+  content: '\E850'
+
+.st-card-summary .card-content ul li h3
+  font-size: 1.8em
+  margin: 0
+
+.st-card-summary .card-content ul li p
+  margin: 0
+
+.st-card-summary .card-content hr
+  margin: 13px 0
+  border-color: rgba(69, 90, 100, .2)
+
+.st-card-summary .card-content .last-update
+  font-size: .8em
+  color: rgba(255, 255, 255, 0.4)
+
 .st-data-table
   background-color: $primary
   border-color: $primary-dark
+  font-size: 1rem
 
 .st-data-table .q-data-table-title
   color: white
+  font-size: 1.1rem
 
 .st-data-table .q-data-table-selection
-  background: #f5f5f6
+  background: $neutral
 
 .st-data-table .q-picker-textfield.active .q-picker-textfield-value
   color: white
@@ -108,10 +167,10 @@ body
   color: white
 
 .st-data-table table tr
-  background-color: #e1e2e1
+  background-color: $neutral
 
 .st-data-table table tbody tr:nth-child(odd)
-  background-color: fade(black, .07%)
+  background-color: lighten($neutral, 50%)
 
 .st-data-table table td
   color: black
