@@ -89,6 +89,7 @@
           bodyStyle: {
             maxHeight: '500px'
           },
+          responsive: true,
           selection: 'single'
         },
         tableColumns: [
