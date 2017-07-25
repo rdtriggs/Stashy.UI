@@ -71,7 +71,7 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   import moment from 'moment'
-  import { formatLongCurrency, formatStandardCurrency, formatShortCurrency } from '../../core/utils'
+  import { formatCurrency, formatPercent } from '../../core/utils'
 
   export default {
     data () {
@@ -105,7 +105,7 @@
             width: 'auto',
             sort: true,
             format (value, row) {
-              return formatLongCurrency(value, true)
+              return formatCurrency(value)
             }
           },
           {
@@ -114,7 +114,7 @@
             width: 'auto',
             sort: true,
             format (value, row) {
-              return formatLongCurrency(value)
+              return formatCurrency(value)
             }
           },
           {
@@ -123,7 +123,7 @@
             width: 'auto',
             sort: true,
             format (value, row) {
-              return formatStandardCurrency(value)
+              return formatPercent(value)
             }
           },
           {
@@ -132,7 +132,7 @@
             width: 'auto',
             sort: true,
             format (value, row) {
-              return formatLongCurrency(value)
+              return formatCurrency(value)
             }
           },
           {
@@ -141,7 +141,7 @@
             width: 'auto',
             sort: true,
             format (value, row) {
-              return formatShortCurrency(value, true)
+              return formatCurrency(value)
             }
           },
           {
@@ -150,7 +150,7 @@
             width: 'auto',
             sort: true,
             format (value, row) {
-              return formatLongCurrency(value)
+              return formatCurrency(value)
             }
           }
         ]
@@ -296,7 +296,7 @@
           }
         }
 
-        return formatShortCurrency(value, true)
+        return formatCurrency(value)
       },
       portfolioValueBtc () {
         let value = 0
@@ -312,7 +312,7 @@
           }
         }
 
-        return formatStandardCurrency(value)
+        return formatCurrency(value)
       },
       tickerLastUpdate () {
         let value = 'forever ago'
