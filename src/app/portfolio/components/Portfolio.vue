@@ -4,25 +4,26 @@
       <div class="row gutter wrap">
         <div class="width-1of1 gt-md-width-1of2 gt-bg-width-1of4">
           <div class="st-card-summary">
-            <div class="card-title">Summary</div>
             <div class="card-content">
-              <ul>
-                <li>
-                  <h3>{{ portfolioAssetCount }}</h3>
-                  <p>Assets</p>
-                </li>
-                <li class="money">
-                  <h3>{{ portfolioValueUsd }}</h3>
-                  <p>USD Value</p>
-                </li>
-                <li class="wallet">
-                  <h3>{{ portfolioValueBtc }}</h3>
-                  <p>BTC Value</p>
-                </li>
-              </ul>
-              <hr>
-              <div class="last-update">Last updated {{ tickerLastUpdate }}</div>
+              <h3>{{ portfolioValueUsd }}</h3>
             </div>
+            <div class="card-footer">USD Value</div>
+          </div>
+        </div>
+        <div class="width-1of1 gt-md-width-1of2 gt-bg-width-1of4">
+          <div class="st-card-summary">
+            <div class="card-content">
+              <h3>{{ portfolioValueBtc }}</h3>
+            </div>
+            <div class="card-footer">BTC Value</div>
+          </div>
+        </div>
+        <div class="width-1of1 gt-md-width-1of2 gt-bg-width-1of4">
+          <div class="st-card-summary">
+            <div class="card-content">
+              <h3>{{ portfolioAssetCount }}</h3>
+            </div>
+            <div class="card-footer">Assets</div>
           </div>
         </div>
       </div>
