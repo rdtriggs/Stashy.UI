@@ -8,6 +8,7 @@
         <q-toolbar-title :padding="1">
           <img src="~assets/stashy.svg" alt="stashy">
         </q-toolbar-title>
+        <div ref="options"></div>
       </div>
       <!--<q-drawer ref="drawer">
         <div class="toolbar light">
@@ -35,6 +36,7 @@
 
 <script>
   import { mapActions } from 'vuex'
+  import bus from './bus'
 
   export default {
     data () {
@@ -43,11 +45,23 @@
       }
     },
     methods: {
+      setToolbarOptions: function (options) {
+        if (options === undefined || options.length === 0) {
+          return
+        }
+
+        for (let i = 0; i < options.length; i++) {
+          console.log(options)
+        }
+      },
       ...mapActions([
         'loadTickers',
         'loadAssets',
         'updateTickers'
       ])
+    },
+    created: function () {
+      bus.$on('set-options', this.setToolbarOptions)
     },
     mounted: function () {
       this.loadTickers()
@@ -55,10 +69,11 @@
 
       this.tickerInterval = setInterval(function () {
         this.updateTickers()
-      }.bind(this), 30000)
+      }.bind(this), 300000)
     },
     beforeDestroy: function () {
       clearInterval(this.tickerInterval)
+      bus.$off('set-options', this.setToolbarOptions)
     }
   }
 </script>

@@ -2,28 +2,20 @@
   <div>
     <div class="layout-padding">
       <div class="row gutter wrap">
-        <div class="width-1of1 gt-md-width-1of2 gt-bg-width-1of4">
+        <div class="width-1of1 gt-md-width-1of2 gt-bg-width-1of5">
           <div class="st-card-summary">
-            <div class="card-content">
+            <div class="card-content money">
               <h3>{{ portfolioValueUsd }}</h3>
             </div>
             <div class="card-footer">USD Value</div>
           </div>
         </div>
-        <div class="width-1of1 gt-md-width-1of2 gt-bg-width-1of4">
+        <div class="width-1of1 gt-md-width-1of2 gt-bg-width-1of5">
           <div class="st-card-summary">
-            <div class="card-content">
+            <div class="card-content wallet">
               <h3>{{ portfolioValueBtc }}</h3>
             </div>
             <div class="card-footer">BTC Value</div>
-          </div>
-        </div>
-        <div class="width-1of1 gt-md-width-1of2 gt-bg-width-1of4">
-          <div class="st-card-summary">
-            <div class="card-content">
-              <h3>{{ portfolioAssetCount }}</h3>
-            </div>
-            <div class="card-footer">Assets</div>
           </div>
         </div>
       </div>
@@ -37,7 +29,10 @@
           </button>
         </template>
       </q-data-table>
-      <div class="usage">Data provided by <a href="https://coinmarketcap.com/" target="_blank">CoinMarketCap</a></div>
+      <div class="usage">
+        Data provided by <a href="https://coinmarketcap.com/"
+                            target="_blank">CoinMarketCap</a>. Last updated {{ tickerLastUpdate }}.
+      </div>
     </div>
     <button class="secondary circular absolute-bottom-right" @click="$refs.assetModal.open()"
             style="right: 18px; bottom: 18px;">
@@ -73,6 +68,7 @@
   import { mapState, mapActions } from 'vuex'
   import moment from 'moment'
   import { formatCurrency, formatPercent } from '../../core/utils'
+  import bus from '../../bus'
 
   export default {
     data () {
@@ -107,12 +103,30 @@
             width: 'auto',
             sort: true,
             format (value, row) {
-              return formatCurrency(value)
+              return formatCurrency(value, true)
             }
           },
           {
             label: 'BTC Price',
             field: 'price_btc',
+            width: 'auto',
+            sort: true,
+            format (value, row) {
+              return formatCurrency(value)
+            }
+          },
+          {
+            label: 'ETH Price',
+            field: 'price_eth',
+            width: 'auto',
+            sort: true,
+            format (value, row) {
+              return formatCurrency(value)
+            }
+          },
+          {
+            label: 'LTC Price',
+            field: 'price_ltc',
             width: 'auto',
             sort: true,
             format (value, row) {
@@ -143,12 +157,30 @@
             width: 'auto',
             sort: true,
             format (value, row) {
-              return formatCurrency(value)
+              return formatCurrency(value, true)
             }
           },
           {
             label: 'BTC Value',
             field: 'value_btc',
+            width: 'auto',
+            sort: true,
+            format (value, row) {
+              return formatCurrency(value)
+            }
+          },
+          {
+            label: 'ETH Value',
+            field: 'value_eth',
+            width: 'auto',
+            sort: true,
+            format (value, row) {
+              return formatCurrency(value)
+            }
+          },
+          {
+            label: 'LTC Value',
+            field: 'value_ltc',
             width: 'auto',
             sort: true,
             format (value, row) {
@@ -258,9 +290,13 @@
               name: ticker[0].name,
               price_usd: ticker[0].price_usd,
               price_btc: ticker[0].price_btc,
+              price_eth: ticker[0].price_eth,
+              price_ltc: ticker[0].price_ltc,
               amount: this.assets[i].amount,
               value_usd: ticker[0].price_usd * this.assets[i].amount,
               value_btc: ticker[0].price_btc * this.assets[i].amount,
+              value_eth: ticker[0].price_eth * this.assets[i].amount,
+              value_ltc: ticker[0].price_ltc * this.assets[i].amount,
               percent_change: ticker[0].percent_change_24h
             }
 
@@ -278,6 +314,9 @@
 
           this.$data.tableCache = Object.assign([], this.$data.tableCache)
         }
+
+        // set table title
+        this.$data.tableConfig.title = 'Portfolio (' + this.$data.tableCache.length + ' assets)'
 
         return this.$data.tableCache
       },
@@ -330,6 +369,16 @@
         cached: state => state.core.tickers.cached,
         assets: state => state.portfolio.assets
       })
+    },
+    mounted: function () {
+      bus.$emit('set-options', [
+        {
+          template: '<button><i>add_circle_outline</i></button>'
+        }
+      ])
+    },
+    beforeDestroy: function () {
+      bus.$emit('set-options')
     }
   }
 </script>
