@@ -27,6 +27,7 @@ $toolbar-faded-color ?= composite-color($primary)
 
 body
   background-color #F5F5F6
+  cursor default
 
 .toolbar
   padding-top 15px
@@ -87,7 +88,7 @@ body
 
 .st-card-summary
   @extends .card
-  background-color $primary-light
+  background $primary-light no-repeat left top
 
 .st-card-summary .card-title
   font-weight 300
@@ -97,7 +98,7 @@ body
 
 .st-card-summary .card-footer
   font-weight 300
-  color white
+  color rgba(255, 255, 255, 0.7)
   background-color $primary
   padding 7px 4px
   text-align center
@@ -110,9 +111,24 @@ body
   color $light
   padding-top 1.6rem
   padding-bottom 1.6rem
+  //position relative
+  //&:before
+  //  content ""
+  //  opacity 0.3
+  //  top 0
+  //  left 0
+  //  bottom 0
+  //  right 0
+  //  position: absolute
+  //  background-repeat no-repeat
+  //  background-size 100px
+  //&.money:before
+  //  background-image url(../assets/icons/ic_attach_money_white_24px.svg)
+  //&.wallet:before
+  //  background-image url(../assets/icons/ic_account_balance_wallet_white_24px.svg)
 
 .st-card-summary .card-content h3
-  font-size 2.8rem
+  font-size 3rem
   font-weight 200
   text-align center
   margin 0
@@ -155,3 +171,4 @@ body
 
 .usage
   margin-top 30px
+  text-align center
