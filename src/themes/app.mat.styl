@@ -26,159 +26,149 @@ $toolbar-faded-color ?= composite-color($primary)
 @import '~quasar-framework/dist/quasar.mat.styl'
 
 body
-  background-color: #F5F5F6
+  background-color #F5F5F6
+  cursor default
 
 .toolbar
-  padding-top: 15px
-  padding-bottom: 11px
+  padding-top 15px
+  padding-bottom 11px
 
   .toolbar-content img
-    max-width: 110px;
-    border-style: none;
+    max-width 110px;
+    border-style none;
 
   .toolbar-meta
-    color: darken(white, 30%)
+    color darken(white, 30%)
 
 .layout-view h1
-  font-size: 2.4rem;
-  margin: 0 0 .7em;
+  font-size 2.4rem;
+  margin 0 0 .7rem;
 
 .layout-view h1 > small
-  font-size: 65%
-  color: $faded
+  font-size 65%
+  color $faded
 
 .st-modal .modal-content
-  color: #777
+  color #777
 
   @media (min-width $layout-medium-min)
     width 400px
 
 .st-modal .modal-content .list
-  margin-bottom: 0.912rem
+  margin-bottom 0.912rem
 
 .st-modal .modal-content .textfield
-  width: 100%
+  width 100%
 
 .st-modal .modal-content .form-group
-  margin-bottom: 20px
+  margin-bottom 20px
 
   &:last-child
-    margin-bottom: 0
+    margin-bottom 0
 
 .st-modal .modal-content .form-group label
-  cursor: default
+  cursor default
 
 .st-modal .modal-content .st-footer
   @extends .row
 
 .st-card-value
   @extends .card
-  background-color: $primary-light
+  background-color $primary-light
 
 .st-card-value .card-content
-  text-align: center
-  color: $light
-  padding-top: 32px
-  padding-bottom: 32px
+  text-align center
+  color $light
+  padding-top 32px
+  padding-bottom 32px
 
 .st-card-value .card-content span
-  font-size: 3.4rem
-  font-weight: 200
+  font-size 3.4rem
+  font-weight 200
 
 .st-card-summary
   @extends .card
-  background-color: $primary-light
+  background $primary-light no-repeat left top
 
 .st-card-summary .card-title
-  font-weight: 300
-  color: white
-  background-color: $primary
-  padding: 14px 8px
+  font-weight 300
+  color white
+  background-color $primary
+  padding 14px 8px
+
+.st-card-summary .card-footer
+  font-weight 300
+  color rgba(255, 255, 255, 0.7)
+  background-color $primary
+  padding 7px 4px
+  text-align center
 
 .st-card-summary .card-title span
-  float: right
-  font-size: 1.1rem
+  float right
+  font-size 1.1rem
 
 .st-card-summary .card-content
-  color: $light
+  color $light
+  padding-top 1.6rem
+  padding-bottom 1.6rem
+  //position relative
+  //&:before
+  //  content ""
+  //  opacity 0.3
+  //  top 0
+  //  left 0
+  //  bottom 0
+  //  right 0
+  //  position: absolute
+  //  background-repeat no-repeat
+  //  background-size 100px
+  //&.money:before
+  //  background-image url(../assets/icons/ic_attach_money_white_24px.svg)
+  //&.wallet:before
+  //  background-image url(../assets/icons/ic_account_balance_wallet_white_24px.svg)
 
-.st-card-summary .card-content ul
-  list-style: none
-  margin: 0
-  padding: 0
-
-.st-card-summary .card-content ul li
-  margin-bottom: 13px
-
-  &:last-child
-    margin-bottom: 0
-
-  &:before
-    color: rgba(255, 255, 255, 0.4)
-    font-family: 'Material Icons'
-    content: '\E8B0'
-    font-size: 2.4em
-    float: left
-    margin-right: 16px
-
-.st-card-summary .card-content ul li.money:before
-  content: '\E227'
-
-.st-card-summary .card-content ul li.wallet:before
-  content: '\E850'
-
-.st-card-summary .card-content ul li h3
-  font-size: 1.8em
-  margin: 0
-
-.st-card-summary .card-content ul li p
-  margin: 0
-  color: rgba(255, 255, 255, 0.4)
-
-.st-card-summary .card-content hr
-  margin: 13px 0
-  border-color: rgba(69, 90, 100, .2)
-
-.st-card-summary .card-content .last-update
-  font-size: .8em
-  font-style: italic
-  color: rgba(255, 255, 255, 0.4)
+.st-card-summary .card-content h3
+  font-size 3rem
+  font-weight 200
+  text-align center
+  margin 0
 
 .st-data-table
-  background-color: $primary
-  border-color: $primary-dark
-  font-size: 1rem
+  background-color $primary
+  border-color $primary-dark
+  font-size 1rem
 
 .st-data-table .q-data-table-title
-  color: white
-  font-size: 1.1rem
+  color white
+  font-size 1.1rem
 
 .st-data-table .q-data-table-selection
-  background: $neutral
+  background $neutral
 
 .st-data-table .q-picker-textfield.active .q-picker-textfield-value
-  color: white
+  color white
 
 .st-data-table .q-picker-textfield:after
-  color: white
+  color white
 
 .st-data-table table thead tr
-  background-color: $primary
+  background-color $primary
 
 .st-data-table table thead tr th
-  color: white
+  color white
 
 .st-data-table table tr
-  background-color: $neutral
+  background-color $neutral
 
 .st-data-table table tbody tr:nth-child(odd)
-  background-color: lighten($neutral, 50%)
+  background-color lighten($neutral, 50%)
 
 .st-data-table table td
-  color: black
+  color black
 
 .st-data-table .q-data-table-message
-  color: white
+  color white
 
 .usage
-  margin-top: 30px
+  margin-top 30px
+  text-align center

@@ -1,8 +1,8 @@
 import numeral from 'numeral'
 
-export const formatCurrency = (value, format = 'determinant', symbol = false) => {
+export const formatCurrency = (value, symbol = false, format = 'auto') => {
   switch (format) {
-    case 'determinant':
+    case 'auto':
       if (value >= 100000) {
         format = '0,0'
       }
