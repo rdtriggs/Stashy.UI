@@ -1,39 +1,31 @@
-// === DEFAULT / CUSTOM STYLE ===
-// WARNING! always comment out ONE of the two require() calls below.
-// 1. use next line to activate CUSTOM STYLE (./src/themes)
-require(`./themes/app.${__THEME}.styl`)
-// 2. or, use next line to activate DEFAULT QUASAR STYLE
-// require(`quasar/dist/quasar.${__THEME}.css`)
-// ==============================
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import Vue from 'vue';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import localforage from 'localforage';
+import App from './App';
+import store from './store';
+import router from './router';
 
-import Vue from 'vue'
-import axios from 'axios'
-import lodash from 'lodash'
-import VueLodash from 'vue-lodash/dist/vue-lodash.min'
-import VueAxios from 'vue-axios'
-import Quasar from 'quasar'
-import localforage from 'localforage'
-require('localforage-startswith')
-import router from './router'
-import store from './store'
+require('localforage-startswith');
 
-// register plugins
-Vue.use(VueAxios, axios)
-Vue.use(VueLodash, lodash)
+Vue.use(BootstrapVue);
+Vue.use(VueAxios, axios);
+Vue.config.productionTip = false;
 
 localforage.config({
-  name: 'stashy'
-})
+  name: 'stashy',
+});
 
-// Install Quasar Framework
-Vue.use(Quasar)
-
-Quasar.start(() => {
-  /* eslint-disable no-new */
-  new Vue({
-    el: '#q-app',
-    store,
-    router,
-    render: h => h(require('./app/App.vue'))
-  })
-})
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  store,
+  router,
+  template: '<App/>',
+  components: { App },
+});

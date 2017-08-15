@@ -1,0 +1,23 @@
+@import "~bootstrap-vue/dist/bootstrap-vue";
+@import "~bootstrap/scss/bootstrap";
+@import "fonts";
+@import "~vue-multiselect/dist/vue-multiselect.min.css";
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f6;
+}
+
+.navbar {
+  background-color: #455a64;
+  margin-bottom: 1rem;
+}
+
+.portfolio table {
+  border: 1px solid #455a64;
+
+  thead {
+    background-color: #455a64;
+    color: #fff;
+  }
+}
