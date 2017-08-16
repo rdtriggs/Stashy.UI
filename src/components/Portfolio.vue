@@ -1,15 +1,14 @@
 <template>
   <div class="portfolio">
-    <div class="row mb-3">
+    <div class="row">
       <div class="col-md-4">
-        <b-card title="Portfolio Value" footer-tag="footer" class="mb-3">
-          <p class="card-text" style="font-size: 2.4rem;">{{ portfolioValue.usd_formatted }}</p>
+        <b-card title="Portfolio Value" footer-tag="footer" class="st-card mb-3">
+          <p class="card-text large">{{ portfolioValue.usd_formatted }}</p>
           <div slot="footer">{{ portfolio.length }} Assets Tracked</div>
         </b-card>
-        <b-card title="Top Gainers" class="mb-3">
+        <b-card title="Top Gainers" class="st-card-green mb-sm-3">
           <b-list-group>
-            <b-list-group-item v-for="item in topList" :key="item.id"
-                               style="border: none; padding-left:0; padding-right: 0;">
+            <b-list-group-item v-for="item in topList" :key="item.id">
               {{ item.name }}
               <br>{{ item.percent }}
             </b-list-group-item>
@@ -20,29 +19,43 @@
         </b-card>
       </div>
       <div class="col-md-7 push-md-1">
-        <allocation-chart :chart-data="assetAllocationData" :options="assetAllocationOptions"></allocation-chart>
+        <allocation-chart :chart-data="assetAllocationData" :options="assetAllocationOptions"
+                          :height="300"></allocation-chart>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <b-button v-b-modal="'assetModal'" class="mb-3">Add Asset</b-button>
-        <b-table
-          striped
-          hover
-          show-empty
-          empty-text="No assets found"
-          :items="tableItems"
-          :fields="tableFields"
-        >
-          <template slot="asset" scope="row">{{row.value.name}}<br>{{row.value.symbol}}</template>
-        </b-table>
+        <div class="table-wrapper mb-3">
+          <div class="table-header d-flex">
+            <b-form-input v-model="filter" placeholder="Search" class="mr-3"/>
+            <b-button v-b-modal="'assetModal'">Add Asset</b-button>
+          </div>
+          <b-table
+            striped
+            hover
+            show-empty
+            empty-text="No assets found"
+            :items="tableItems"
+            :fields="tableFields"
+            :current-page="currentPage"
+            :per-page="perPage"
+            :filter="filter"
+            :sort-by.sync="sortBy"
+            :sort-desc.sync="sortDesc"
+            @filtered="onFiltered"
+          >
+            <template slot="asset" scope="row">{{row.value.name}}<br>{{row.value.symbol}}</template>
+          </b-table>
+        </div>
+        <b-pagination :total-rows="portfolio.length" :per-page="perPage" v-model="currentPage"/>
       </div>
     </div>
-    <b-modal id="assetModal" title="Add asset" @ok="submitAssetModal" @shown="resetAssetModal">
+    <b-modal no-close-on-backdrop no-auto-focus id="assetModal" title="Add Asset" @ok="submitAssetModal"
+             @shown="resetAssetModal">
       <form @submit.stop.prevent="submit">
         <b-form-fieldset label="Select an asset">
           <multiselect id="assetSelect" v-model="asset.selected" :options="tickerList" :custom-label="customTickerLabel"
-                       placeholder="Select an asset" label="asset.name" track-by="id"></multiselect>
+                       placeholder="Select an asset" label="asset.name" track-by="id" :maxHeight="225"></multiselect>
         </b-form-fieldset>
         <b-form-fieldset label="Enter your holdings">
           <b-form-input type="text" id="assetAmount" placeholder="e.g. 1.27" v-model="asset.amount"></b-form-input>
@@ -71,6 +84,11 @@
           selected: null,
           amount: null,
         },
+        currentPage: 1,
+        perPage: 5,
+        sortBy: 'value_usd',
+        sortDesc: false,
+        filter: null,
       };
     },
     methods: {
@@ -94,6 +112,11 @@
       ...mapActions([
         'modifyAsset',
       ]),
+      onFiltered(filteredItems) {
+        // Trigger pagination to update the number of buttons/pages due to filtering
+        this.totalRows = filteredItems.length;
+        this.currentPage = 1;
+      },
     },
     computed: {
       topList() {
@@ -104,12 +127,14 @@
           if (a.percent_change < b.percent_change) return 1;
           return 0;
         });
-        tmp = tmp.slice(0, 5);
+        tmp = tmp.slice(0, 3);
         for (let i = 0; i < tmp.length; i += 1) {
-          list.push({
-            name: tmp[i].asset.name,
-            percent: formatPercent(tmp[i].percent_change, true),
-          });
+          if (tmp[i].percent_change > 0) {
+            list.push({
+              name: tmp[i].asset.name,
+              percent: formatPercent(tmp[i].percent_change, true),
+            });
+          }
         }
         return list;
       },
