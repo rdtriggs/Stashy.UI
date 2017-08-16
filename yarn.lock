@@ -871,8 +871,8 @@ babel-types@^6.18.0, babel-types@^6.19.0, babel-types@^6.23.0, babel-types@^6.24
     to-fast-properties "^1.0.1"
 
 babylon@^6.17.0, babylon@^6.17.2, babylon@^6.17.4:
-  version "6.17.4"
-  resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.17.4.tgz#3e8b7402b88d22c3423e137a1577883b15ff869a"
+  version "6.18.0"
+  resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.18.0.tgz#af2f3b88fa6f5c1e4c634d1a0f8eac4f55b395e3"
 
 backo2@1.0.2:
   version "1.0.2"
@@ -969,9 +969,9 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bootstrap-vue@^0.21.0:
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/bootstrap-vue/-/bootstrap-vue-0.21.0.tgz#33a256770d6293b7ea14a25bbad92f4aae536a86"
+bootstrap-vue@^0.22.0:
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/bootstrap-vue/-/bootstrap-vue-0.22.0.tgz#77fa380e7ad1f435843de45c5d38a387b033c9f4"
   dependencies:
     bootstrap "^4.0.0-alpha.6"
     tether latest
