@@ -104,7 +104,7 @@
         }
         this.modifyAsset({
           id: this.asset.selected.id,
-          amount: Number.parseFloat(this.asset.amount),
+          amount: Number.parseFloat(this.asset.amount.replace(/,/g, '')),
         });
         return true;
       },
