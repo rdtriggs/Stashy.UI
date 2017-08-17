@@ -85,7 +85,7 @@
           amount: null,
         },
         currentPage: 1,
-        perPage: 5,
+        perPage: 10,
         sortBy: 'value_usd',
         sortDesc: false,
         filter: null,
