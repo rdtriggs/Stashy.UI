@@ -47,9 +47,11 @@
             <template slot="asset" scope="row">{{row.value.name}}<br>{{row.value.symbol}}</template>
           </b-table>
         </div>
-        <b-pagination :total-rows="portfolio.length" :per-page="perPage" v-model="currentPage"/>
+        <b-pagination :total-rows="portfolio.length" :per-page="perPage" v-model="currentPage" class="mb-1"/>
       </div>
     </div>
+    <hr>
+    <p>Data provided by <a href="https://coinmarketcap.com/" target="_blank">CoinMarketCap</a></p>
     <b-modal no-close-on-backdrop no-auto-focus id="assetModal" title="Add Asset" @ok="submitAssetModal"
              @shown="resetAssetModal">
       <form @submit.stop.prevent="submit">
