@@ -2,13 +2,16 @@
   <div class="portfolio">
     <div class="row">
       <div class="col-md-4">
-        <b-card title="Portfolio Value" footer-tag="footer" class="st-card mb-3">
+        <b-card footer-tag="footer" class="st-card mb-3">
+          <h4 class="card-title">Portfolio Value <small>USD</small></h4>
           <p class="card-text large">{{ portfolioValue.usd_formatted }}</p>
           <div slot="footer">{{ portfolio.length }} Assets Tracked</div>
         </b-card>
-        <b-card title="Top Gainers" class="st-card-green mb-sm-3">
+        <b-card class="st-card-green mb-sm-3">
+          <h4 class="card-title">Top Gainers <small>by %</small></h4>
           <b-list-group>
             <b-list-group-item v-for="item in topList" :key="item.id">
+              <img :src="imageUrl(item.id)" v-bind:alt="item.name" class="mr-3 rounded-circle"/>
               {{ item.name }}
               <br>{{ item.percent }}
             </b-list-group-item>
@@ -31,8 +34,6 @@
             <b-button v-b-modal="'assetModal'">Add Asset</b-button>
           </div>
           <b-table
-            striped
-            hover
             show-empty
             empty-text="No assets found"
             :items="tableItems"
@@ -44,7 +45,11 @@
             :sort-desc.sync="sortDesc"
             @filtered="onFiltered"
           >
-            <template slot="asset" scope="row">{{row.value.name}}<br>{{row.value.symbol}}</template>
+            <template slot="asset" scope="row">
+              <img :src="imageUrl(row.value.id)" v-bind:alt="row.value.name"
+                   class="mr-3 rounded-circle hidden-sm-down align-baseline"/>
+              <span class="d-inline-block">{{row.value.name}}<br>{{row.value.symbol}}</span>
+            </template>
           </b-table>
         </div>
         <b-pagination :total-rows="portfolio.length" :per-page="perPage" v-model="currentPage" class="mb-1"/>
@@ -119,6 +124,9 @@
         this.totalRows = filteredItems.length;
         this.currentPage = 1;
       },
+      imageUrl(id) {
+        return `../static/icons/${id}.png`;
+      },
     },
     computed: {
       topList() {
@@ -133,6 +141,7 @@
         for (let i = 0; i < tmp.length; i += 1) {
           if (tmp[i].percent_change > 0) {
             list.push({
+              id: tmp[i].id,
               name: tmp[i].asset.name,
               percent: formatPercent(tmp[i].percent_change, true),
             });
@@ -251,7 +260,7 @@
           if (ticker.length !== 0 && price.length !== 0) {
             portfolio.push({
               id: ticker[0].id,
-              asset: { name: ticker[0].name, symbol: ticker[0].symbol },
+              asset: { id: ticker[0].id, name: ticker[0].name, symbol: ticker[0].symbol },
               price_usd: price[0].price_usd,
               price_btc: price[0].price_btc,
               price_eth: price[0].price_eth,
