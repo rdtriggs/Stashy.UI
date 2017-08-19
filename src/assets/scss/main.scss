@@ -25,7 +25,11 @@ body {
 }
 
 .table-wrapper .table {
+  @extend .table-hover;
+  @extend .table-striped;
+
   margin-bottom: 0;
+  background-color: $white;
 }
 
 .table-wrapper .table thead {
@@ -37,9 +41,26 @@ body {
   border-top: none;
 }
 
+.table-wrapper .table tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.table-wrapper .table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.035);
+}
+
+.table-wrapper .table th, .table-wrapper .table td {
+  border-top-color: $gray-lightest;
+}
+
 .st-card {
   @extend .card;
   background-color: lighten($blue, 25%);
+}
+
+.st-card .card-title small {
+  font-size: 70%;
+  color: rgba(255, 255, 255, 0.5%);
 }
 
 .st-card .card-block {
