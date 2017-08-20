@@ -3,21 +3,26 @@
     <div class="row">
       <div class="col-md-4">
         <b-card footer-tag="footer" class="st-card mb-3">
-          <h4 class="card-title">Portfolio Value <small>USD</small></h4>
+          <h4 class="card-title">Portfolio Value
+            <small>USD</small>
+          </h4>
           <p class="card-text large">{{ portfolioValue.usd_formatted }}</p>
           <div slot="footer">{{ portfolio.length }} Assets Tracked</div>
         </b-card>
         <b-card class="st-card-green mb-sm-3">
-          <h4 class="card-title">Top Gainers <small>by %</small></h4>
+          <h4 class="card-title">Top Gainers
+            <small>by %</small>
+          </h4>
           <b-list-group>
             <b-list-group-item v-for="item in topList" :key="item.id">
-              <img :src="imageUrl(item.id)" v-bind:alt="item.name" class="mr-3 rounded-circle"/>
+              <img :src="imageUrl(item.id)" v-bind:alt="item.name" class="rounded-circle"
+                   style="margin-right: 0.75rem;"/>
               {{ item.name }}
               <br>{{ item.percent }}
             </b-list-group-item>
           </b-list-group>
           <div v-if="topList.length == 0">
-            <p class="card-text">Sorry, no tracked assets.</p>
+            <p class="card-text">Sorry, no gainers today.</p>
           </div>
         </b-card>
       </div>
@@ -31,7 +36,7 @@
         <div class="table-wrapper mb-3">
           <div class="table-header d-flex">
             <b-form-input v-model="filter" placeholder="Search" class="mr-3"/>
-            <b-button v-b-modal="'assetModal'">Add Asset</b-button>
+            <b-button v-b-modal="'addAssetModal'"><i class="fa fa-plus"></i></b-button>
           </div>
           <b-table
             show-empty
@@ -46,9 +51,17 @@
             @filtered="onFiltered"
           >
             <template slot="asset" scope="row">
-              <img :src="imageUrl(row.value.id)" v-bind:alt="row.value.name"
-                   class="mr-3 rounded-circle hidden-sm-down align-baseline"/>
+              <img :src="imageUrl(row.item.id)" v-bind:alt="row.value.name"
+                   class="rounded-circle hidden-sm-down align-baseline" style="margin-right: 0.75rem;"/>
               <span class="d-inline-block">{{row.value.name}}<br>{{row.value.symbol}}</span>
+            </template>
+            <template slot="actions" scope="row">
+              <div class="text-right">
+                <!-- We use click.stop here to prevent a 'row-clicked' event from also happening -->
+                <b-btn size="sm" @click.stop="editAsset(row.item,row.index,$event.target)">
+                  <i class="fa fa-pencil"></i>
+                </b-btn>
+              </div>
             </template>
           </b-table>
         </div>
@@ -57,8 +70,8 @@
     </div>
     <hr>
     <p>Data provided by <a href="https://coinmarketcap.com/" target="_blank">CoinMarketCap</a></p>
-    <b-modal no-close-on-backdrop no-auto-focus id="assetModal" title="Add Asset" @ok="submitAssetModal"
-             @shown="resetAssetModal">
+    <b-modal no-close-on-backdrop no-auto-focus id="addAssetModal" title="Add Asset" @ok="submitAddAssetModal"
+             @hidden="resetAsset">
       <form @submit.stop.prevent="submit">
         <b-form-fieldset label="Select an asset">
           <multiselect id="assetSelect" v-model="asset.selected" :options="tickerList" :custom-label="customTickerLabel"
@@ -66,6 +79,16 @@
         </b-form-fieldset>
         <b-form-fieldset label="Enter your holdings">
           <b-form-input type="text" id="assetAmount" placeholder="e.g. 1.27" v-model="asset.amount"></b-form-input>
+        </b-form-fieldset>
+      </form>
+    </b-modal>
+    <b-modal no-close-on-backdrop id="editAssetModal" title="Edit Asset" @ok="submitEditAssetModal"
+             @hidden="resetAsset">
+      <form @submit.stop.prevent="submit">
+        <strong>{{ asset.name }}</strong>
+        <b-form-fieldset label="Enter your holdings">
+          <b-form-input type="text" id="assetAmount" placeholder="e.g. 1.27" v-model="asset.amount"></b-form-input>
+          <small>To remove this asset, enter "0".</small>
         </b-form-fieldset>
       </form>
     </b-modal>
@@ -88,6 +111,8 @@
     data() {
       return {
         asset: {
+          id: null,
+          name: null,
           selected: null,
           amount: null,
         },
@@ -99,11 +124,29 @@
       };
     },
     methods: {
-      resetAssetModal() {
+      resetAsset() {
+        this.asset.id = null;
+        this.asset.name = null;
         this.asset.selected = null;
         this.asset.amount = null;
       },
-      submitAssetModal(e) {
+      editAsset(item, index, button) {
+        this.asset.id = item.id;
+        this.asset.name = item.asset.name;
+        this.asset.amount = item.amount;
+        this.$root.$emit('show::modal', 'editAssetModal', button);
+      },
+      submitEditAssetModal(e) {
+        if (!this.asset.id || !this.asset.amount) {
+          return e.cancel();
+        }
+        this.modifyAsset({
+          id: this.asset.id,
+          amount: Number.parseFloat(this.asset.amount.replace(/,/g, '')),
+        });
+        return true;
+      },
+      submitAddAssetModal(e) {
         if (!this.asset.selected || !this.asset.amount) {
           return e.cancel();
         }
@@ -249,6 +292,9 @@
             formatter(value) {
               return formatPercent(value, true);
             },
+          },
+          actions: {
+            label: '',
           },
         };
       },
