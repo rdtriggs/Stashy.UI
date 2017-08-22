@@ -119,7 +119,7 @@
         currentPage: 1,
         perPage: 10,
         sortBy: 'value_usd',
-        sortDesc: false,
+        sortDesc: true,
         filter: null,
       };
     },
