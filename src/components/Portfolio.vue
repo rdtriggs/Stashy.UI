@@ -15,10 +15,9 @@
           </h4>
           <b-list-group>
             <b-list-group-item v-for="item in topList" :key="item.id">
-              <img :src="imageUrl(item.id)" v-bind:alt="item.name" class="rounded-circle"
+              <img :src="imageUrl(item.id)" v-bind:alt="item.name" class="rounded-circle align-baseline"
                    style="margin-right: 0.75rem;"/>
-              {{ item.name }}
-              <br>{{ item.percent }}
+              <span class="d-inline-block">{{ item.name }}<br>{{ item.percent }}</span>
             </b-list-group-item>
           </b-list-group>
           <div v-if="topList.length == 0">
@@ -26,7 +25,7 @@
           </div>
         </b-card>
       </div>
-      <div class="col-md-7 push-md-1">
+      <div class="col-md-7 push-md-1 mb-sm-3">
         <allocation-chart :chart-data="assetAllocationData" :options="assetAllocationOptions"
                           :height="300"></allocation-chart>
       </div>
@@ -39,6 +38,7 @@
             <b-button v-b-modal="'addAssetModal'"><i class="fa fa-plus"></i></b-button>
           </div>
           <b-table
+            responsive
             show-empty
             empty-text="No assets found"
             :items="tableItems"
@@ -58,9 +58,9 @@
             <template slot="actions" scope="row">
               <div class="text-right">
                 <!-- We use click.stop here to prevent a 'row-clicked' event from also happening -->
-                <b-btn size="sm" @click.stop="editAsset(row.item,row.index,$event.target)">
+                <b-button size="sm" @click.stop="editAsset(row.item,row.index,$event.target)">
                   <i class="fa fa-pencil"></i>
-                </b-btn>
+                </b-button>
               </div>
             </template>
           </b-table>
