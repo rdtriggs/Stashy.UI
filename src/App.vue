@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <b-navbar toggleable type="inverse" toggle-breakpoint="md">
+    <b-navbar toggleable toggle-breakpoint="md" type="dark">
       <div class="container">
         <b-nav-toggle target="nav_collapse"></b-nav-toggle>
         <b-navbar-brand to="/"><img src="./assets/stashy.svg" height="30" alt="stashy"></b-navbar-brand>
