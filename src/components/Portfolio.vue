@@ -25,7 +25,7 @@
           </div>
         </b-card>
       </div>
-      <div class="col-md-7 push-md-1 mb-sm-3">
+      <div class="col-md-7 ml-md-auto mb-sm-3">
         <allocation-chart :chart-data="assetAllocationData" :options="assetAllocationOptions"
                           :height="300"></allocation-chart>
       </div>
