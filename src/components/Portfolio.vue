@@ -286,7 +286,10 @@
       },
       tableFields() {
         return {
-          asset: { label: 'Asset', sortable: true },
+          asset: {
+            label: 'Asset',
+            sortable: true,
+          },
           price_usd: {
             label: 'Price',
             sortable: true,
