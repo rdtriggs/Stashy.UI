@@ -58,7 +58,9 @@
             <template slot="price_usd" scope="row">{{row.value | formatCurrency}}</template>
             <template slot="amount" scope="row">{{row.value | formatCurrency}}</template>
             <template slot="value_usd" scope="row">{{row.value | formatCurrency}}</template>
-            <template slot="percent_change" scope="row">{{row.value | formatPercent(true)}}</template>
+            <template slot="percent_change" scope="row">
+              <span v-bind:class="colorizePercent(row.value)">{{row.value | formatPercent(true)}}</span>
+            </template>
             <template slot="actions" scope="row">
               <div class="text-right">
                 <!-- We use click.stop here to prevent a 'row-clicked' event from also happening -->
@@ -173,6 +175,14 @@
       },
       imageUrl(id) {
         return `../static/icons/${id}.png`;
+      },
+      colorizePercent(value) {
+        if (value > 0) {
+          return 'text-success';
+        } else if (value < 0) {
+          return 'text-danger';
+        }
+        return '';
       },
     },
     filters: {
