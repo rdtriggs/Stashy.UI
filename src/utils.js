@@ -66,3 +66,14 @@ export const formatPercent = (value, symbol = false) => {
 
   return ret;
 };
+
+export const validCurrencies = {
+  usd: {
+    name: 'Dollar',
+    code: 'USD',
+  },
+  btc: {
+    name: 'Bitcoin',
+    code: 'BTC',
+  },
+};
