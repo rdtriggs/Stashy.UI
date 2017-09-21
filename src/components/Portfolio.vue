@@ -326,18 +326,26 @@
           price: {
             label: 'Price',
             sortable: true,
+            // eslint-disable-next-line quote-props
+            'class': 'text-right',
           },
           amount: {
             label: 'Holdings',
             sortable: true,
+            // eslint-disable-next-line quote-props
+            'class': 'text-right',
           },
           value: {
             label: 'Value',
             sortable: true,
+            // eslint-disable-next-line quote-props
+            'class': 'text-right',
           },
           percent_change: {
             label: '% Change',
             sortable: true,
+            // eslint-disable-next-line quote-props
+            'class': 'text-right',
           },
           actions: {
             label: '',
