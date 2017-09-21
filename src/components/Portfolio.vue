@@ -9,7 +9,7 @@
           <p class="card-text large">{{ portfolioValue.usd_formatted }}</p>
           <div slot="footer">{{ portfolio.length }} Assets Tracked</div>
         </b-card>
-        <b-card class="st-card-green mb-sm-3">
+        <b-card class="st-card-green mb-3">
           <h4 class="card-title">Top Gainers
             <small>by %</small>
           </h4>
@@ -25,7 +25,7 @@
           </div>
         </b-card>
       </div>
-      <div class="col-md-7 ml-md-auto mb-sm-3">
+      <div class="col-md-7 ml-md-auto mb-3">
         <allocation-chart :chart-data="assetAllocationData" :options="assetAllocationOptions"
                           :height="300"></allocation-chart>
       </div>
