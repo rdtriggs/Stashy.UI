@@ -40,6 +40,11 @@ body {
 
 .table-wrapper .table thead th {
   border-top: none;
+  white-space: nowrap;
+}
+
+.table-wrapper .table tbody td {
+  white-space: nowrap;
 }
 
 .table-wrapper .table tbody tr:nth-of-type(odd) {
