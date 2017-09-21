@@ -55,6 +55,10 @@
                    class="rounded-circle hidden-sm-down align-baseline" style="margin-right: 0.75rem;"/>
               <span class="d-inline-block">{{row.value.name}}<br>{{row.value.symbol}}</span>
             </template>
+            <template slot="price_usd" scope="row">{{row.value | formatCurrency}}</template>
+            <template slot="amount" scope="row">{{row.value | formatCurrency}}</template>
+            <template slot="value_usd" scope="row">{{row.value | formatCurrency}}</template>
+            <template slot="percent_change" scope="row">{{row.value | formatPercent(true)}}</template>
             <template slot="actions" scope="row">
               <div class="text-right">
                 <!-- We use click.stop here to prevent a 'row-clicked' event from also happening -->
@@ -171,6 +175,14 @@
         return `../static/icons/${id}.png`;
       },
     },
+    filters: {
+      formatCurrency(value, symbol = false, format = 'auto') {
+        return formatCurrency(value, symbol, format);
+      },
+      formatPercent(value, symbol = false) {
+        return formatPercent(value, symbol);
+      },
+    },
     computed: {
       topList() {
         const list = [];
@@ -253,7 +265,7 @@
           value.eth += this.portfolio[i].value_eth;
           value.ltc += this.portfolio[i].value_ltc;
         }
-        value.usd_formatted = formatCurrency(value.usd, true);
+        value.usd_formatted = formatCurrency(value.usd);
         value.btc_formatted = formatCurrency(value.btc);
         value.eth_formatted = formatCurrency(value.eth);
         value.ltc_formatted = formatCurrency(value.ltc);
@@ -268,30 +280,18 @@
           price_usd: {
             label: 'Price',
             sortable: true,
-            formatter(value) {
-              return formatCurrency(value, true);
-            },
           },
           amount: {
             label: 'Holdings',
             sortable: true,
-            formatter(value) {
-              return formatCurrency(value);
-            },
           },
           value_usd: {
             label: 'Value',
             sortable: true,
-            formatter(value) {
-              return formatCurrency(value, true);
-            },
           },
           percent_change: {
             label: '% Change',
             sortable: true,
-            formatter(value) {
-              return formatPercent(value, true);
-            },
           },
           actions: {
             label: '',
