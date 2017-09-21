@@ -52,7 +52,7 @@
           >
             <template slot="asset" scope="row">
               <img :src="imageUrl(row.item.id)" v-bind:alt="row.value.name"
-                   class="rounded-circle hidden-sm-down align-baseline" style="margin-right: 0.75rem;"/>
+                   class="rounded-circle d-none d-md-inline align-baseline" style="margin-right: 0.75rem;"/>
               <span class="d-inline-block">{{row.value.name}}<br>{{row.value.symbol}}</span>
             </template>
             <template slot="price_usd" scope="row">{{row.value | formatCurrency}}</template>
