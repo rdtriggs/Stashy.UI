@@ -4,10 +4,15 @@
       <div class="col-md-4">
         <b-card footer-tag="footer" class="st-card mb-3">
           <h4 class="card-title">Portfolio Value
-            <small>USD</small>
+            <small>{{ currentCurrency.code }}</small>
           </h4>
-          <p class="card-text large">{{ portfolioValue.usd_formatted }}</p>
-          <div slot="footer">{{ portfolio.length }} Assets Tracked</div>
+          <p class="card-text large">{{ portfolioValue.value_formatted }}</p>
+          <div slot="footer" style="line-height:32px;">
+            {{ portfolio.length }} Assets Tracked
+            <b-button size="sm" v-on:click="toggleCurrentCurrency();">
+              {{ currentCurrency.code }}
+            </b-button>
+          </div>
         </b-card>
         <b-card class="st-card-green mb-3">
           <h4 class="card-title">Top Gainers
@@ -55,9 +60,9 @@
                    class="rounded-circle d-none d-md-inline align-baseline" style="margin-right: 0.75rem;"/>
               <span class="d-inline-block">{{row.value.name}}<br>{{row.value.symbol}}</span>
             </template>
-            <template slot="price_usd" scope="row">{{row.value | formatCurrency}}</template>
+            <template slot="price" scope="row">{{row.value | formatCurrency}}</template>
             <template slot="amount" scope="row">{{row.value | formatCurrency}}</template>
-            <template slot="value_usd" scope="row">{{row.value | formatCurrency}}</template>
+            <template slot="value" scope="row">{{row.value | formatCurrency}}</template>
             <template slot="percent_change" scope="row">
               <span v-bind:class="colorizePercent(row.value)">{{row.value | formatPercent(true)}}</span>
             </template>
@@ -105,7 +110,7 @@
   import { mapActions, mapState } from 'vuex';
   import Multiselect from 'vue-multiselect';
   import colors from 'nice-color-palettes/100.json';
-  import { formatCurrency, formatPercent } from '../utils';
+  import { formatCurrency, formatPercent, validCurrencies } from '../utils';
   import AllocationChart from './charts/AllocationChart';
 
   export default {
@@ -124,12 +129,25 @@
         },
         currentPage: 1,
         perPage: 10,
-        sortBy: 'value_usd',
+        sortBy: 'value',
         sortDesc: true,
         filter: null,
+        currentCurrency: validCurrencies.usd,
       };
     },
     methods: {
+      toggleCurrentCurrency() {
+        switch (this.currentCurrency) {
+          case validCurrencies.btc:
+            this.currentCurrency = validCurrencies.usd;
+            break;
+          case validCurrencies.usd:
+          default:
+            this.currentCurrency = validCurrencies.btc;
+            break;
+        }
+        return true;
+      },
       resetAsset() {
         this.asset.id = null;
         this.asset.name = null;
@@ -239,7 +257,7 @@
           }],
         };
         for (let i = 0; i < this.portfolio.length; i += 1) {
-          const percent = (this.portfolio[i].value_usd / this.portfolioValue.usd) * 100;
+          const percent = (this.portfolio[i].value / this.portfolioValue.value) * 100;
           allocations.labels.push(this.portfolio[i].asset.name);
           allocations.datasets[0].backgroundColor.push(colors[i][1]);
           allocations.datasets[0].data.push(percent.toFixed(2));
@@ -260,6 +278,8 @@
       },
       portfolioValue() {
         const value = {
+          value: 0,
+          value_formatted: null,
           usd: 0,
           usd_formatted: null,
           btc: 0,
@@ -275,6 +295,19 @@
           value.eth += this.portfolio[i].value_eth;
           value.ltc += this.portfolio[i].value_ltc;
         }
+
+        switch (this.currentCurrency) {
+          case validCurrencies.btc:
+            value.value = value.btc;
+            value.value_formatted = formatCurrency(value.btc);
+            break;
+          case validCurrencies.usd:
+          default:
+            value.value = value.usd;
+            value.value_formatted = formatCurrency(value.usd);
+            break;
+        }
+
         value.usd_formatted = formatCurrency(value.usd);
         value.btc_formatted = formatCurrency(value.btc);
         value.eth_formatted = formatCurrency(value.eth);
@@ -290,7 +323,7 @@
             label: 'Asset',
             sortable: true,
           },
-          price_usd: {
+          price: {
             label: 'Price',
             sortable: true,
           },
@@ -298,7 +331,7 @@
             label: 'Holdings',
             sortable: true,
           },
-          value_usd: {
+          value: {
             label: 'Value',
             sortable: true,
           },
@@ -317,14 +350,30 @@
           const ticker = this.tickers.filter(item => item.id === this.assets[i].id);
           const price = this.prices.filter(item => item.id === this.assets[i].id);
           if (ticker.length !== 0 && price.length !== 0) {
+            let currencyPrice = 0;
+            let currencyValue = 0;
+            switch (this.currentCurrency) {
+              case validCurrencies.btc:
+                currencyPrice = price[0].price_btc;
+                currencyValue = price[0].price_btc * this.assets[i].amount;
+                break;
+              case validCurrencies.usd:
+              default:
+                currencyPrice = price[0].price_usd;
+                currencyValue = price[0].price_usd * this.assets[i].amount;
+                break;
+            }
+
             portfolio.push({
               id: ticker[0].id,
               asset: { id: ticker[0].id, name: ticker[0].name, symbol: ticker[0].symbol },
+              price: currencyPrice,
               price_usd: price[0].price_usd,
               price_btc: price[0].price_btc,
               price_eth: price[0].price_eth,
               price_ltc: price[0].price_ltc,
               amount: this.assets[i].amount,
+              value: currencyValue,
               value_usd: price[0].price_usd * this.assets[i].amount,
               value_btc: price[0].price_btc * this.assets[i].amount,
               value_eth: price[0].price_eth * this.assets[i].amount,

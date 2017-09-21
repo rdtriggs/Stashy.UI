@@ -61,16 +61,13 @@ body {
 
 .st-card {
   @extend .card;
+  color: #f4f4f4;
   background-color: lighten($blue, 25%);
 }
 
 .st-card .card-title small {
   font-size: 70%;
   color: rgba(255, 255, 255, 0.5%);
-}
-
-.st-card {
-  color: #f4f4f4;
 }
 
 .st-card .list-group-item {
@@ -89,6 +86,15 @@ body {
   background-color: $blue;
   color: #f4f4f4;
   font-style: italic;
+}
+
+.st-card .btn-secondary {
+  float: right;
+  border: 1px solid lighten($blue, 25%);
+  background-color: darken($blue, 5%);
+  &:active, &:hover {
+    background-color: darken($blue, 10%);
+  }
 }
 
 .st-card-green {
