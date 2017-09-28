@@ -158,7 +158,7 @@
         this.asset.id = item.id;
         this.asset.name = item.asset.name;
         this.asset.amount = item.amount;
-        this.$root.$emit('show::modal', 'editAssetModal', button);
+        this.$root.$emit('bv::show::modal', 'editAssetModal', button);
       },
       submitEditAssetModal(e) {
         if (!this.asset.id || !this.asset.amount) {
