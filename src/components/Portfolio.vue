@@ -348,7 +348,9 @@
             'class': 'text-right',
           },
           actions: {
-            label: '',
+            label: 'Actions',
+            // eslint-disable-next-line quote-props
+            'class': 'text-right',
           },
         };
       },
