@@ -42,39 +42,40 @@
             <b-form-input v-model="filter" placeholder="Search" class="mr-3"/>
             <b-button v-b-modal="'addAssetModal'"><i class="fa fa-plus"></i></b-button>
           </div>
-          <b-table
-            responsive
-            show-empty
-            empty-text="No assets found"
-            :items="tableItems"
-            :fields="tableFields"
-            :current-page="currentPage"
-            :per-page="perPage"
-            :filter="filter"
-            :sort-by.sync="sortBy"
-            :sort-desc.sync="sortDesc"
-            @filtered="onFiltered"
-          >
-            <template slot="asset" scope="row">
-              <img :src="imageUrl(row.item.id)" v-bind:alt="row.value.name"
-                   class="rounded-circle d-none d-md-inline align-baseline" style="margin-right: 0.75rem;"/>
-              <span class="d-inline-block">{{row.value.name}}<br>{{row.value.symbol}}</span>
-            </template>
-            <template slot="price" scope="row">{{row.value | formatCurrency}}</template>
-            <template slot="amount" scope="row">{{row.value | formatCurrency}}</template>
-            <template slot="value" scope="row">{{row.value | formatCurrency}}</template>
-            <template slot="percent_change" scope="row">
-              <span v-bind:class="colorizePercent(row.value)">{{row.value | formatPercent(true)}}</span>
-            </template>
-            <template slot="actions" scope="row">
-              <div class="text-right">
-                <!-- We use click.stop here to prevent a 'row-clicked' event from also happening -->
-                <b-button size="sm" @click.stop="editAsset(row.item,row.index,$event.target)">
-                  <i class="fa fa-pencil"></i>
-                </b-button>
-              </div>
-            </template>
-          </b-table>
+          <div class="table-responsive">
+            <b-table
+              show-empty
+              empty-text="No assets found"
+              :items="tableItems"
+              :fields="tableFields"
+              :current-page="currentPage"
+              :per-page="perPage"
+              :filter="filter"
+              :sort-by.sync="sortBy"
+              :sort-desc.sync="sortDesc"
+              @filtered="onFiltered"
+            >
+              <template slot="asset" scope="row">
+                <img :src="imageUrl(row.item.id)" v-bind:alt="row.value.name"
+                     class="rounded-circle d-none d-md-inline align-baseline" style="margin-right: 0.75rem;"/>
+                <span class="d-inline-block">{{row.value.name}}<br>{{row.value.symbol}}</span>
+              </template>
+              <template slot="price" scope="row">{{row.value | formatCurrency}}</template>
+              <template slot="amount" scope="row">{{row.value | formatCurrency}}</template>
+              <template slot="value" scope="row">{{row.value | formatCurrency}}</template>
+              <template slot="percent_change" scope="row">
+                <span v-bind:class="colorizePercent(row.value)">{{row.value | formatPercent(true)}}</span>
+              </template>
+              <template slot="actions" scope="row">
+                <div class="text-right">
+                  <!-- We use click.stop here to prevent a 'row-clicked' event from also happening -->
+                  <b-button size="sm" @click.stop="editAsset(row.item,row.index,$event.target)">
+                    <i class="fa fa-pencil"></i>
+                  </b-button>
+                </div>
+              </template>
+            </b-table>
+          </div>
         </div>
         <b-pagination :total-rows="portfolio.length" :per-page="perPage" v-model="currentPage" class="mb-1"/>
       </div>
