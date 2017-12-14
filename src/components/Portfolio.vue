@@ -110,9 +110,9 @@
 <script>
   import { mapActions, mapState } from 'vuex';
   import Multiselect from 'vue-multiselect';
-  import colors from 'nice-color-palettes/100.json';
   import { formatCurrency, formatPercent, validCurrencies } from '../utils';
   import AllocationChart from './charts/AllocationChart';
+  import colors from '../colors';
 
   export default {
     name: 'portfolio',
@@ -257,11 +257,29 @@
             data: [],
           }],
         };
+        const otherAllocations = {
+          labels: [],
+          data: [],
+        };
         for (let i = 0; i < this.portfolio.length; i += 1) {
           const percent = (this.portfolio[i].value / this.portfolioValue.value) * 100;
-          allocations.labels.push(this.portfolio[i].asset.name);
-          allocations.datasets[0].backgroundColor.push(colors[i][1]);
-          allocations.datasets[0].data.push(percent.toFixed(2));
+          if (percent > 1) {
+            allocations.labels.push(this.portfolio[i].asset.name);
+            allocations.datasets[0].backgroundColor.push(colors[i]);
+            allocations.datasets[0].data.push(percent.toFixed(2));
+          } else {
+            otherAllocations.labels.push(this.portfolio[i].asset.name);
+            otherAllocations.data.push(percent);
+          }
+        }
+        if (otherAllocations.data.length > 0) {
+          let otherPercent = 0;
+          allocations.labels.push('Others');
+          allocations.datasets[0].backgroundColor.push(colors[this.portfolio.length + 1]);
+          for (let i = 0; i < otherAllocations.data.length; i += 1) {
+            otherPercent += otherAllocations.data[i];
+          }
+          allocations.datasets[0].data.push(otherPercent.toFixed(2));
         }
         return allocations;
       },

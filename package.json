@@ -20,7 +20,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "bootstrap": "^4.0.0-beta",
-    "bootstrap-vue": "^1.0.0-beta.9",
+    "bootstrap-vue": "^1.0.0",
     "chart.js": "^2.7.0",
     "font-awesome": "^4.7.0",
     "localforage": "^1.5.0",
@@ -81,7 +81,6 @@
     "karma-webpack": "^2.0.2",
     "lolex": "^2.1.2",
     "mocha": "^3.2.0",
-    "nice-color-palettes": "^2.0.0",
     "nightwatch": "^0.9.12",
     "node-sass": "^4.5.3",
     "opn": "^5.1.0",
