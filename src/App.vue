@@ -1,25 +1,9 @@
 <template>
-  <div id="app">
-    <b-navbar toggleable toggle-breakpoint="md" type="dark">
-      <div class="container">
-        <b-nav-toggle target="nav_collapse"></b-nav-toggle>
-        <b-navbar-brand to="/"><img src="./assets/stashy.svg" height="30" alt="stashy"></b-navbar-brand>
-        <b-collapse is-nav id="nav_collapse">
-          <b-nav is-nav-bar>
-            <b-nav-item to="/portfolio">Portfolio</b-nav-item>
-            <!--<b-nav-item to="/settings">Settings</b-nav-item>-->
-          </b-nav>
-        </b-collapse>
-      </div>
-    </b-navbar>
-    <div class="container">
-      <router-view></router-view>
-    </div>
-  </div>
+  <router-view></router-view>
 </template>
 
 <style lang="scss">
-  @import './assets/scss/main.scss';
+  @import './assets/scss/style';
 </style>
 
 <script>
