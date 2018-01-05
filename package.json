@@ -1,13 +1,16 @@
 {
-  "name": "stashy",
+  "name": "@zypek/stashy",
   "version": "1.0.0",
   "description": "A simple, private cryptocurrency portfolio manager.",
   "author": "Major Dutch <dutch@zypek.com>",
+  "homepage": "https://stashy.net",
+  "copyright": "Copyright 2017 Zypek",
   "repository": {
     "type": "git",
     "url": "git://github.com/zypek/stashy.git"
   },
   "license": "MIT",
+  "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
