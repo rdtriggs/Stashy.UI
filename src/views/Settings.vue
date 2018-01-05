@@ -1,3 +1,4 @@
+<!--
 <template>
   <div class="settings">
   </div>
@@ -8,3 +9,4 @@
     name: 'settings',
   };
 </script>
+-->

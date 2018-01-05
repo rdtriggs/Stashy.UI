@@ -1,4 +1,18 @@
 <template>
+  <div>
+    test
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'portfolio',
+  };
+</script>
+
+
+<!--
+<template>
   <div class="portfolio">
     <div class="row">
       <div class="col-md-4">
@@ -68,7 +82,7 @@
               </template>
               <template slot="actions" scope="row">
                 <div class="text-right">
-                  <!-- We use click.stop here to prevent a 'row-clicked' event from also happening -->
+                  &lt;!&ndash; We use click.stop here to prevent a 'row-clicked' event from also happening &ndash;&gt;
                   <b-button size="sm" @click.stop="editAsset(row.item,row.index,$event.target)">
                     <i class="fa fa-pencil"></i>
                   </b-button>
@@ -424,3 +438,4 @@
     },
   };
 </script>
+-->
