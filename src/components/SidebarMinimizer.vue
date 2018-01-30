@@ -4,7 +4,7 @@
 
 <script>
   export default {
-    name: 'sidebar-minimizer',
+    name: 'app-sidebar-minimizer',
     methods: {
       sidebarMinimize() {
         document.body.classList.toggle('sidebar-minimized');

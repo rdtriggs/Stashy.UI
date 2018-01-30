@@ -63,7 +63,7 @@
   import SidebarNavItem from './SidebarNavItem';
 
   export default {
-    name: 'sidebar',
+    name: 'app-sidebar',
     props: {
       navItems: {
         type: Array,

@@ -4,6 +4,6 @@
 
 <script>
   export default {
-    name: 'sidebar-footer',
+    name: 'app-sidebar-footer',
   };
 </script>
