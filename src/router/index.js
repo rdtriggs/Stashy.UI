@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VueHead from 'vue-head';
 import Router from 'vue-router';
 
 // containers
@@ -10,6 +11,7 @@ import Portfolio from '@/views/Portfolio';
 // import Settings from '@/views/Settings';
 import Error404 from '@/views/errors/Error404';
 
+Vue.use(VueHead);
 Vue.use(Router);
 
 export default new Router({
