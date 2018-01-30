@@ -7,6 +7,22 @@
 <script>
   export default {
     name: 'portfolio',
+    data() {
+      return {
+        page: {
+          title: '$0.00',
+          separator: '·',
+        },
+      };
+    },
+    head: {
+      title() {
+        return {
+          inner: this.page.title,
+          separator: this.page.separator,
+        };
+      },
+    },
   };
 </script>
 
