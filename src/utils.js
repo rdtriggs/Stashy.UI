@@ -71,9 +71,16 @@ export const validCurrencies = {
   usd: {
     name: 'Dollar',
     code: 'USD',
+    symbol: '$',
   },
   btc: {
     name: 'Bitcoin',
     code: 'BTC',
+    symbol: '₿',
+  },
+  eth: {
+    name: 'Ethereum',
+    code: 'ETH',
+    symbol: 'Ξ',
   },
 };
