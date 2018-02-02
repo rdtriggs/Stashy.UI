@@ -42,7 +42,7 @@ export const formatCurrency = (value, symbol = false, format = 'auto') => {
     ret = symbol === true ? '$ ' : '';
 
     if (value < 0.0000001) {
-      ret += '0.0000000{(value * 100000000).toFixed(0)}';
+      ret += `0.0000000${(value * 100000000).toFixed(0)}`;
     } else {
       ret = '0.00000001';
     }
@@ -65,4 +65,15 @@ export const formatPercent = (value, symbol = false) => {
   }
 
   return ret;
+};
+
+export const validCurrencies = {
+  usd: {
+    name: 'Dollar',
+    code: 'USD',
+  },
+  btc: {
+    name: 'Bitcoin',
+    code: 'BTC',
+  },
 };
