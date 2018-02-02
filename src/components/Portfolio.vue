@@ -327,6 +327,9 @@
             break;
         }
 
+        // hack to set title
+        document.title = `${value.value_formatted} · Stashy | Private Cryptocurrency Portfolio Manager`;
+
         value.usd_formatted = formatCurrency(value.usd);
         value.btc_formatted = formatCurrency(value.btc);
         value.eth_formatted = formatCurrency(value.eth);
