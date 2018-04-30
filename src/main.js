@@ -7,12 +7,9 @@ import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import localforage from 'localforage';
-import { extendPrototype } from 'localforage-startswith';
 import App from './components/App';
 import store from './store';
 import router from './router';
-
-extendPrototype(localforage);
 
 Vue.use(BootstrapVue);
 Vue.use(VueAxios, axios);
