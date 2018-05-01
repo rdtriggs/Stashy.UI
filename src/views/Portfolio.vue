@@ -1,10 +1,10 @@
 <template>
   <div>
     <b-button size="sm" v-on:click="seedData();">Seed Data</b-button>
-    <b-card-group columns>
+    <div class="portfolio">
       <AssetCard v-for="(item, index) in portfolio" v-bind:item="item" v-bind:index="index"
                  v-bind:key="item.id"></AssetCard>
-    </b-card-group>
+    </div>
   </div>
 </template>
 
