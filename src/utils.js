@@ -17,6 +17,9 @@ export const formatCurrency = (value, symbol = false, format = 'auto') => {
         template = '0,0.000[00000]';
       }
       break;
+    case 'fiat':
+      template = '0,0.00';
+      break;
     case 'standard':
       template = '0,0.000';
       break;
