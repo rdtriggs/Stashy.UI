@@ -17,7 +17,7 @@
     data() {
       return {
         page: {
-          title: '$0.00',
+          title: '0.00',
           separator: '·',
         },
       };
