@@ -1,16 +1,16 @@
 <template>
-  <div class="portfolio-item">
-    <div class="portfolio-item-body">
-      <div class="portfolio-item-title">
+  <div class="portfolio-asset">
+    <div class="portfolio-asset-body">
+      <div class="portfolio-asset-title">
         <img :src="imageUrl(item.id)" v-bind:alt="item.asset.name" @error="imageLoadError">
         <h4>{{ item.asset.name }}
           <small>{{ item.asset.symbol }}</small>
         </h4>
       </div>
-      <div class="portfolio-item-content">
-        <p class="portfolio-value">{{ item.value_usd | formatCurrency }}</p>
+      <div class="portfolio-asset-content">
+        <p class="portfolio-asset-value">{{ item.value_usd | formatCurrency }}</p>
       </div>
-      <div class="portfolio-item-footer">
+      <div class="portfolio-asset-footer">
         <ul>
           <li>
             <strong>Holdings</strong><br>
@@ -31,10 +31,10 @@
 </template>
 
 <script>
-  import { formatCurrency, formatPercent } from '../utils';
+  import { formatCurrency, formatPercent } from '../../utils';
 
   export default {
-    name: 'asset-card',
+    name: 'portfolio-asset-card',
     props: {
       item: {},
     },
