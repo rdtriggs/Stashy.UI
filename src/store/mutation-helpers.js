@@ -1,6 +1,6 @@
 export default {
   refreshPortfolio(tickers, prices, assets) {
-    const portfolio = [];
+    const portfolio = { value: 0, value_usd: 0, value_btc: 0, assets: [] };
     for (let i = 0; i < assets.length; i += 1) {
       const ticker = tickers.filter(item => item.id === assets[i].id);
       const price = prices.filter(item => item.id === assets[i].id);
@@ -19,7 +19,11 @@ export default {
         //     break;
         // }
 
-        portfolio.push({
+        portfolio.value += price[0].price_usd * assets[i].amount;
+        portfolio.value_usd += price[0].price_usd * assets[i].amount;
+        portfolio.value_btc += price[0].price_btc * assets[i].amount;
+
+        portfolio.assets.push({
           id: ticker[0].id,
           asset: { id: ticker[0].id, name: ticker[0].name, symbol: ticker[0].symbol },
           // price: currencyPrice,

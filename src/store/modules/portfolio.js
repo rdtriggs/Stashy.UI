@@ -12,7 +12,7 @@ const PORTFOLIO_NAME = 'default';
 const state = {
   tickers: [],
   prices: [],
-  portfolio: [],
+  portfolio: {},
   assets: [],
 };
 
