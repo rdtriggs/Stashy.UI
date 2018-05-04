@@ -48,10 +48,10 @@
     },
     methods: {
       imageUrl(id) {
-        return `../static/icons/${id}.png`;
+        return `../static/img/icons/${id}.png`;
       },
       imageLoadError(e) {
-        e.target.src = '../static/icons/bitcoin.png';
+        e.target.src = '../static/img/icon-fallback.png';
       },
     },
   };
