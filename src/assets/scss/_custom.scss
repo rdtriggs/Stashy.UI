@@ -11,3 +11,23 @@ body {
   $border: darken($background, 10%);
   @include button-variant($background, $border, $hover-background: darken($background, 7.5%), $hover-border: darken($border, 10%), $active-background: darken($background, 10%), $active-border: darken($border, 12.5%));
 }
+
+footer.app-footer div.copyright {
+  width: 100%;
+  text-align: center;
+
+  @include media-breakpoint-up(md) {
+    width: 50%;
+    text-align: left;
+  }
+}
+
+footer.app-footer div.attribution {
+  width: 100%;
+  text-align: center;
+
+  @include media-breakpoint-up(md) {
+    width: 50%;
+    text-align: right;
+  }
+}
