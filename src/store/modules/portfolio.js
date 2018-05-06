@@ -26,17 +26,19 @@ const getters = {
 
 // actions
 const actions = {
-  updateTickers({ commit }) {
+  updateTickers({ commit, dispatch }) {
     stashy.refreshTickers().then(() => {
       stashy.fetchTickers().then((result) => {
         commit(types.LOAD_TICKERS, result.tickers);
+        dispatch('updatePortfolio');
       });
     });
   },
-  updatePrices({ commit }) {
+  updatePrices({ commit, dispatch }) {
     stashy.refreshPrices().then(() => {
       stashy.fetchPrices().then((result) => {
         commit(types.LOAD_PRICES, result.prices);
+        dispatch('updatePortfolio');
       });
     });
   },
