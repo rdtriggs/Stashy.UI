@@ -39,6 +39,9 @@
 
 .portfolio > .portfolio-value > .portfolio-value-body > .portfolio-value-title > h4 {
   margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .portfolio > .portfolio-value > .portfolio-value-body > .portfolio-value-title > img {
@@ -102,12 +105,21 @@
 
 .portfolio > .portfolio-asset > .portfolio-asset-body > .portfolio-asset-title > h4 {
   margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .portfolio > .portfolio-asset > .portfolio-asset-body > .portfolio-asset-title > img {
   margin-right: .75rem;
   width: 32px;
   height: 32px;
+}
+
+.portfolio > .portfolio-asset > .portfolio-asset-body > .portfolio-asset-title > span {
+  @extend .ml-auto;
+  cursor: pointer;
+  padding: 5px 10px;
 }
 
 .portfolio > .portfolio-asset > .portfolio-asset-body > .portfolio-asset-content {
