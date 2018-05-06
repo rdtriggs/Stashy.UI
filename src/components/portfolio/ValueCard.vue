@@ -9,7 +9,9 @@
         <p class="portfolio-value-value">{{ portfolio.value | formatCurrency }}</p>
       </div>
       <div class="portfolio-value-footer">
-        <b-button variant="add-asset" block><i class="fa fa-plus" aria-hidden="true"></i>Add Asset</b-button>
+        <b-button variant="add-asset" block v-on:click="addAsset">
+          <i class="fa fa-plus" aria-hidden="true"></i>Add Asset
+        </b-button>
       </div>
     </div>
   </div>
@@ -17,6 +19,7 @@
 
 <script>
   import { formatCurrency, formatPercent } from '../../utils';
+  import EventBus from '../../event-bus';
 
   export default {
     name: 'portfolio-value-card',
@@ -29,6 +32,11 @@
       },
       formatPercent(value) {
         return formatPercent(value, true);
+      },
+    },
+    methods: {
+      addAsset() {
+        EventBus.$emit('open-asset-modal');
       },
     },
   };

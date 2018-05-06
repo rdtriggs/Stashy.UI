@@ -6,6 +6,7 @@
         <h4>{{ item.asset.name }}
           <small>{{ item.asset.symbol }}</small>
         </h4>
+        <span v-on:click="removeAsset"><i class="fa fa-trash" aria-hidden="true"></i></span>
       </div>
       <div class="portfolio-asset-content">
         <p class="portfolio-asset-value">{{ item.value_usd | formatCurrency }}</p>
@@ -32,6 +33,7 @@
 
 <script>
   import { formatCurrency, formatPercent } from '../../utils';
+  import EventBus from '../../event-bus';
 
   export default {
     name: 'portfolio-asset-card',
@@ -52,6 +54,9 @@
       },
       imageLoadError(e) {
         e.target.src = '../static/img/icon-fallback.png';
+      },
+      removeAsset() {
+        EventBus.$emit('remove-asset', this.item.id);
       },
     },
   };

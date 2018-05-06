@@ -5,6 +5,7 @@ import moment from 'moment';
 import stashy from '../../api/stashy';
 import * as types from '../mutation-types';
 import helpers from '../mutation-helpers';
+import EventBus from '../../event-bus';
 
 const PORTFOLIO_NAME = 'default';
 
@@ -43,6 +44,7 @@ const actions = {
     // eslint-disable-next-line max-len
     const portfolio = helpers.refreshPortfolio(state.tickers, state.prices, state.assets);
     commit(types.LOAD_PORTFOLIO, portfolio || []);
+    EventBus.$emit('portfolio-updated', state.portfolio);
   },
   loadPortfolio({ dispatch, commit }) {
     // eslint-disable-next-line max-len
@@ -67,6 +69,11 @@ const actions = {
   },
   addAsset({ dispatch, commit }, asset) {
     commit(types.ADD_PORTFOLIO_ASSET, asset);
+    stashy.saveAssets(PORTFOLIO_NAME, state.assets);
+    dispatch('updatePortfolio');
+  },
+  removeAsset({ dispatch, commit }, id) {
+    commit(types.REMOVE_PORTFOLIO_ASSET, id);
     stashy.saveAssets(PORTFOLIO_NAME, state.assets);
     dispatch('updatePortfolio');
   },
@@ -95,6 +102,8 @@ const mutations = {
       if (!Number.isNaN(asset.amount) && asset.amount > 0) {
         state.assets.push(asset);
       }
+    } else {
+      state.assets[index] = asset;
     }
   },
   [types.UPDATE_PORTFOLIO_ASSET](state, asset) {
@@ -103,8 +112,8 @@ const mutations = {
       state.assets[index].amount = asset.amount;
     }
   },
-  [types.REMOVE_PORTFOLIO_ASSET](state, asset) {
-    const index = state.assets.findIndex(e => e.id === asset.id);
+  [types.REMOVE_PORTFOLIO_ASSET](state, id) {
+    const index = state.assets.findIndex(e => e.id === id);
     if (index !== -1) {
       state.assets.splice(index, 1);
     }
