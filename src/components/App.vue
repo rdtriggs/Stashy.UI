@@ -9,35 +9,21 @@
 <script>
   export default {
     name: 'app',
-    // data() {
-    //   return {
-    //     tickerInterval: null,
-    //   };
-    // },
-    // methods: {
-    //   load() {
-    //     Promise.all([this.loadTickers(), this.loadAssets(), this.loadPrices()]).then(() => {
-    //       // todo
-    //     });
-    //   },
-    //   ...mapActions([
-    //     'loadTickers',
-    //     'loadPrices',
-    //     'loadAssets',
-    //     'updatePrices',
-    //   ]),
-    // },
-    // mounted() {
-    //   this.load();
-    //   this.tickerInterval = setInterval(() => {
-    //     this.updatePrices();
-    //   }, 300000);
-    // },
-    // beforeDestroy() {
-    //   clearInterval(this.tickerInterval);
-    // },
+    data() {
+      return {
+        tickerInterval: null,
+      };
+    },
     created() {
       this.$store.dispatch('loadPortfolio');
+    },
+    mounted() {
+      this.tickerInterval = setInterval(() => {
+        this.$store.dispatch('updatePrices');
+      }, 300000);
+    },
+    beforeDestroy() {
+      clearInterval(this.tickerInterval);
     },
   };
 </script>

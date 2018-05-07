@@ -5,15 +5,16 @@ import moment from 'moment';
 import stashy from '../../api/stashy';
 import * as types from '../mutation-types';
 import helpers from '../mutation-helpers';
+import EventBus from '../../event-bus';
+
+const PORTFOLIO_NAME = 'default';
 
 // initial state
 const state = {
   tickers: [],
   prices: [],
-  portfolio: [],
-  portfolioAssets: [],
-  watchlist: [],
-  watchlistAssets: [],
+  portfolio: {},
+  assets: [],
 };
 
 // getters
@@ -21,28 +22,35 @@ const getters = {
   tickers: () => state.tickers,
   prices: () => state.prices,
   portfolio: () => state.portfolio,
-  watchlist: () => state.watchlist,
 };
 
 // actions
 const actions = {
-  updateTickers({ commit }) {
+  updateTickers({ commit, dispatch }) {
     stashy.refreshTickers().then(() => {
       stashy.fetchTickers().then((result) => {
         commit(types.LOAD_TICKERS, result.tickers);
+        dispatch('updatePortfolio');
       });
     });
   },
-  updatePrices({ commit }) {
+  updatePrices({ commit, dispatch }) {
     stashy.refreshPrices().then(() => {
       stashy.fetchPrices().then((result) => {
         commit(types.LOAD_PRICES, result.prices);
+        dispatch('updatePortfolio');
       });
     });
   },
-  loadPortfolio({ dispatch, commit, state }) {
+  updatePortfolio({ commit }) {
     // eslint-disable-next-line max-len
-    Promise.all([stashy.fetchTickers(), stashy.fetchPrices(), stashy.fetchPortfolioAssets()]).then((results) => {
+    const portfolio = helpers.refreshPortfolio(state.tickers, state.prices, state.assets);
+    commit(types.LOAD_PORTFOLIO, portfolio || []);
+    EventBus.$emit('portfolio-updated', state.portfolio);
+  },
+  loadPortfolio({ dispatch, commit }) {
+    // eslint-disable-next-line max-len
+    Promise.all([stashy.fetchTickers(), stashy.fetchPrices(), stashy.fetchAssets(PORTFOLIO_NAME)]).then((results) => {
       const tickersResult = results[0];
       commit(types.LOAD_TICKERS, tickersResult !== null ? tickersResult.tickers : [] || []);
       if (tickersResult === null || (tickersResult !== null && moment(tickersResult.cached).add(1, 'minutes').isBefore(moment()))) {
@@ -58,10 +66,18 @@ const actions = {
       const assetsResult = results[2];
       commit(types.LOAD_PORTFOLIO_ASSETS, assetsResult || []);
     }).finally(() => {
-      // eslint-disable-next-line max-len
-      const portfolio = helpers.refreshPortfolio(state.tickers, state.prices, state.portfolioAssets);
-      commit(types.LOAD_PORTFOLIO, portfolio || []);
+      dispatch('updatePortfolio');
     });
+  },
+  addAsset({ dispatch, commit }, asset) {
+    commit(types.ADD_PORTFOLIO_ASSET, asset);
+    stashy.saveAssets(PORTFOLIO_NAME, state.assets);
+    dispatch('updatePortfolio');
+  },
+  removeAsset({ dispatch, commit }, id) {
+    commit(types.REMOVE_PORTFOLIO_ASSET, id);
+    stashy.saveAssets(PORTFOLIO_NAME, state.assets);
+    dispatch('updatePortfolio');
   },
 };
 
@@ -77,26 +93,31 @@ const mutations = {
     state.prices = prices;
   },
   [types.LOAD_PORTFOLIO_ASSETS](state, assets) {
-    state.portfolioAssets = assets;
+    state.assets = assets;
   },
   [types.ADD_PORTFOLIO_ASSET](state, asset) {
-    const index = state.portfolioAssets.findIndex(e => e.id === asset.id);
+    if (asset === undefined) {
+      return;
+    }
+    const index = state.assets.findIndex(e => e.id === asset.id);
     if (index === -1) {
       if (!Number.isNaN(asset.amount) && asset.amount > 0) {
-        state.portfolioAssets.push(asset);
+        state.assets.push(asset);
       }
+    } else {
+      state.assets[index] = asset;
     }
   },
   [types.UPDATE_PORTFOLIO_ASSET](state, asset) {
-    const index = state.portfolioAssets.findIndex(e => e.id === asset.id);
+    const index = state.assets.findIndex(e => e.id === asset.id);
     if (index !== -1) {
-      state.portfolioAssets[index].amount = asset.amount;
+      state.assets[index].amount = asset.amount;
     }
   },
-  [types.REMOVE_PORTFOLIO_ASSET](state, asset) {
-    const index = state.portfolioAssets.findIndex(e => e.id === asset.id);
+  [types.REMOVE_PORTFOLIO_ASSET](state, id) {
+    const index = state.assets.findIndex(e => e.id === id);
     if (index !== -1) {
-      state.portfolioAssets.splice(index, 1);
+      state.assets.splice(index, 1);
     }
   },
 };

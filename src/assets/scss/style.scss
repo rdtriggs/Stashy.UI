@@ -13,6 +13,9 @@
 @import "~bootstrap/scss/bootstrap";
 @import "~bootstrap-vue/dist/bootstrap-vue";
 
+// Additional imports
+@import "~vue-multiselect/dist/vue-multiselect.min.css";
+
 // Override core variables
 @import "core-variables";
 
@@ -21,3 +24,4 @@
 
 // Custom styles
 @import "custom";
+@import "portfolio";

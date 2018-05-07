@@ -1,7 +1,8 @@
 <template>
   <footer class="app-footer">
-    <span>&copy; 2018 Stashy</span>
-    <span class="ml-auto">Powered by <a href="http://coreui.io">CoreUI</a></span>
+    <div class="copyright">&copy; 2018 Zypek. All rights reserved.</div>
+    <div class="attribution">Data provided by <a href="https://coinmarketcap.com/"
+                                                 target="_blank">CoinMarketCap</a></div>
   </footer>
 </template>
 
