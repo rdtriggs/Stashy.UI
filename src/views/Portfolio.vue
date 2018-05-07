@@ -18,9 +18,6 @@
   export default {
     name: 'portfolio',
     components: { ValueCard, AssetCard, AssetModal },
-    data() {
-      return {};
-    },
     head() {
       return {
         title: {
