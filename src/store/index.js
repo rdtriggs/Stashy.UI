@@ -1,10 +1,17 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import * as vuex from '../vuex';
+// import * as actions from './actions';
+import portfolio from './modules/portfolio';
 
 Vue.use(Vuex);
 
+const debug = process.env.NODE_ENV !== 'production';
+
 export default new Vuex.Store({
-  modules: vuex,
-  strict: process.env.NODE_ENV !== 'production',
+  // actions,
+  modules: {
+    portfolio,
+  },
+  strict: debug,
+  // plugins: debug ? [createLogger()] : [],
 });

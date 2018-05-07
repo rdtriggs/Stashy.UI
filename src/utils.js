@@ -17,6 +17,9 @@ export const formatCurrency = (value, symbol = false, format = 'auto') => {
         template = '0,0.000[00000]';
       }
       break;
+    case 'fiat':
+      template = '0,0.00';
+      break;
     case 'standard':
       template = '0,0.000';
       break;
@@ -71,9 +74,16 @@ export const validCurrencies = {
   usd: {
     name: 'Dollar',
     code: 'USD',
+    symbol: '$',
   },
   btc: {
     name: 'Bitcoin',
     code: 'BTC',
+    symbol: '₿',
+  },
+  eth: {
+    name: 'Ethereum',
+    code: 'ETH',
+    symbol: 'Ξ',
   },
 };
