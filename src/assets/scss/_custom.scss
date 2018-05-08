@@ -6,6 +6,42 @@ body {
   cursor: default;
 }
 
+.app-header.navbar .navbar-toggler {
+  font-size: 20px;
+  padding: 10px;
+  color: #fff;
+  border: none;
+}
+
+.app-header.navbar .navbar-toggler-icon {
+  background: none !important;
+}
+
+.app-header.navbar .navbar-brand {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 1px;
+}
+
+.app-header.navbar .navbar-brand .navbar-brand-content {
+  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  color: #fff;
+  font-size: 1.25rem;
+}
+
+.brand-minimized .app-header.navbar .navbar-brand .navbar-brand-content {
+  display: none;
+}
+
+.app-header.navbar .navbar-brand img {
+  height: 25px;
+  margin-right: 10px;
+  vertical-align: text-top;
+}
+
 .btn-add-asset {
   $background: #2b576d;
   $border: darken($background, 10%);

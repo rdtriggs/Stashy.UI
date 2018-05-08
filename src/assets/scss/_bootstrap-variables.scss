@@ -112,7 +112,7 @@ $input-group-addon-border-color: $gray-200;
 
 $navbar-brand-width: 200px;
 $navbar-brand-bg: darken(#2b576d, 5%);
-$navbar-brand-logo: url('/static/img/logo.svg');
+$navbar-brand-logo: none;
 $navbar-brand-logo-size: 100px auto;
 $navbar-brand-border: (
   bottom: (
