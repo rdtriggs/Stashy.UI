@@ -1,6 +1,6 @@
 # Stashy
 
-> A simple, private cryptocurrency portfolio tracker.
+> A free and private cryptocurrency portfolio tracker.
 
 ## Build Setup
 
