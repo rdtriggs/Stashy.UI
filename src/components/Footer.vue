@@ -1,8 +1,10 @@
 <template>
   <footer class="app-footer">
-    <div class="copyright">&copy; 2018 Zypek. All rights reserved.</div>
-    <div class="attribution">Data provided by <a href="https://coinmarketcap.com/"
-                                                 target="_blank">CoinMarketCap</a></div>
+    <div class="copyright">Copyright &copy; 2018 Stashy. Released under the <a
+      href="https://opensource.org/licenses/mit-license.php" target="_blank">MIT License</a>.
+    </div>
+    <div class="attribution">Some data provided by <a href="https://coinmarketcap.com/"
+                                                      target="_blank">CoinMarketCap</a></div>
   </footer>
 </template>
 
