@@ -1,13 +1,13 @@
 {
-  "name": "@zypek/stashy",
+  "name": "@majordutch/stashy",
   "version": "1.0.0",
   "description": "A simple, private cryptocurrency portfolio manager.",
-  "author": "Major Dutch <dutch@zypek.com>",
-  "homepage": "https://stashy.net",
-  "copyright": "Copyright 2017 Zypek",
+  "author": "majordutch <dutch@zypek.com> (https://zypek.com)",
+  "homepage": "https://app.stashy.net",
+  "copyright": "Copyright (c) 2018 Stashy Developers",
   "repository": {
     "type": "git",
-    "url": "git://github.com/zypek/stashy.git"
+    "url": "git://github.com/majordutch/stashy.git"
   },
   "license": "MIT",
   "private": true,
