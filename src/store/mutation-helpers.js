@@ -19,25 +19,17 @@ export default {
         //     break;
         // }
 
-        portfolio.value += price[0].price_usd * assets[i].amount;
-        portfolio.value_usd += price[0].price_usd * assets[i].amount;
-        portfolio.value_btc += price[0].price_btc * assets[i].amount;
+        portfolio.value += price[0].current_price * assets[i].amount;
 
         portfolio.assets.push({
           id: ticker[0].id,
           asset: { id: ticker[0].id, name: ticker[0].name, symbol: ticker[0].symbol },
           // price: currencyPrice,
-          price_usd: price[0].price_usd,
-          price_btc: price[0].price_btc,
-          price_eth: price[0].price_eth,
-          price_ltc: price[0].price_ltc,
+          price_usd: price[0].current_price,
           amount: assets[i].amount,
           // value: currencyValue,
-          value_usd: price[0].price_usd * assets[i].amount,
-          value_btc: price[0].price_btc * assets[i].amount,
-          value_eth: price[0].price_eth * assets[i].amount,
-          value_ltc: price[0].price_ltc * assets[i].amount,
-          percent_change: price[0].percent_change_24h,
+          value_usd: price[0].current_price * assets[i].amount,
+          percent_change: price[0].percent_change,
         });
       }
     }

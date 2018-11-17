@@ -19,10 +19,7 @@ export default {
     return localforage.getItem(KEY_TICKERS).then(result => result);
   },
   refreshTickers() {
-    return Vue.axios.get('https://api.stashy.net/v1/ticker').then((response) => {
-      if (!response.data.tickers) {
-        return;
-      }
+    return Vue.axios.get('https://api.stashy.net/v2/coin').then((response) => {
       saveTickers(response.data);
     });
   },
@@ -30,10 +27,7 @@ export default {
     return localforage.getItem(KEY_PRICES).then(result => result);
   },
   refreshPrices() {
-    return Vue.axios.get('https://api.stashy.net/v1/ticker/prices').then((response) => {
-      if (!response.data.prices) {
-        return;
-      }
+    return Vue.axios.get('https://api.stashy.net/v2/price').then((response) => {
       savePrices(response.data);
     });
   },

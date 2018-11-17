@@ -1,7 +1,7 @@
 // eslint-disable-next-line max-len
 /* eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }] */
 /* eslint no-shadow: ["error", { "allow": ["state"] }] */
-import moment from 'moment';
+// import moment from 'moment';
 import stashy from '../../api/stashy';
 import * as types from '../mutation-types';
 import helpers from '../mutation-helpers';
@@ -29,7 +29,7 @@ const actions = {
   updateTickers({ commit, dispatch }) {
     stashy.refreshTickers().then(() => {
       stashy.fetchTickers().then((result) => {
-        commit(types.LOAD_TICKERS, result.tickers);
+        commit(types.LOAD_TICKERS, result);
         dispatch('updatePortfolio');
       });
     });
@@ -37,7 +37,7 @@ const actions = {
   updatePrices({ commit, dispatch }) {
     stashy.refreshPrices().then(() => {
       stashy.fetchPrices().then((result) => {
-        commit(types.LOAD_PRICES, result.prices);
+        commit(types.LOAD_PRICES, result);
         dispatch('updatePortfolio');
       });
     });
@@ -52,16 +52,18 @@ const actions = {
     // eslint-disable-next-line max-len
     Promise.all([stashy.fetchTickers(), stashy.fetchPrices(), stashy.fetchAssets(PORTFOLIO_NAME)]).then((results) => {
       const tickersResult = results[0];
-      commit(types.LOAD_TICKERS, tickersResult !== null ? tickersResult.tickers : [] || []);
-      if (tickersResult === null || (tickersResult !== null && moment(tickersResult.cached).add(1, 'minutes').isBefore(moment()))) {
-        dispatch('updateTickers');
-      }
+      commit(types.LOAD_TICKERS, tickersResult !== null ? tickersResult : [] || []);
+      // eslint-disable-next-line max-len
+      // if (tickersResult === null || (tickersResult !== null && moment(tickersResult.cached).add(1, 'minutes').isBefore(moment()))) {
+      dispatch('updateTickers');
+      // }
 
       const pricesResult = results[1];
-      commit(types.LOAD_PRICES, pricesResult !== null ? pricesResult.prices : [] || []);
-      if (pricesResult === null || (pricesResult !== null && moment(pricesResult.cached).add(1, 'minutes').isBefore(moment()))) {
-        dispatch('updatePrices');
-      }
+      commit(types.LOAD_PRICES, pricesResult !== null ? pricesResult : [] || []);
+      // eslint-disable-next-line max-len
+      // if (pricesResult === null || (pricesResult !== null && moment(pricesResult.cached).add(1, 'minutes').isBefore(moment()))) {
+      dispatch('updatePrices');
+      // }
 
       const assetsResult = results[2];
       commit(types.LOAD_PORTFOLIO_ASSETS, assetsResult || []);
