@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default {
   refreshPortfolio(tickers, prices, assets) {
     const portfolio = { value: 0, value_usd: 0, value_btc: 0, assets: [] };
@@ -33,6 +35,7 @@ export default {
         });
       }
     }
+    portfolio.assets = _.sortBy(portfolio.assets, o => -o.value_usd);
     return portfolio;
   },
 };
