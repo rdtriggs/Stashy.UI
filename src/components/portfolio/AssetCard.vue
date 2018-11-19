@@ -1,6 +1,6 @@
 <template>
   <div class="portfolio-asset">
-    <div class="portfolio-asset-body">
+    <div class="portfolio-asset-body" :class="assetStatus(item.percent_change)">
       <div class="portfolio-asset-title">
         <img :src="imageUrl(item.id)" v-bind:alt="item.asset.name" @error="imageLoadError">
         <h4>{{ item.asset.name }}
@@ -23,7 +23,7 @@
           </li>
           <li>
             <strong>% Change</strong><br>
-            {{ item.percent_change | formatPercent }}
+            <strong class="percent-change" :class="assetStatus(item.percent_change)">{{ item.percent_change | formatPercent }}</strong>
           </li>
         </ul>
       </div>
@@ -51,6 +51,15 @@
     methods: {
       imageUrl(id) {
         return `../static/img/icons/${id}.png`;
+      },
+      assetStatus(value) {
+        let str = '';
+        if (value > 0) {
+          str = 'is-up';
+        } else if (value < 0) {
+          str = 'is-down';
+        }
+        return str;
       },
       imageLoadError(e) {
         e.target.src = '../static/img/icon-fallback.png';
