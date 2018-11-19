@@ -6,6 +6,11 @@ body {
   cursor: default;
 }
 
+.app-header.navbar {
+  background-color: $navbar-brand-bg;
+  border-bottom-color: $navbar-brand-bg;
+}
+
 .app-header.navbar .navbar-toggler {
   font-size: 20px;
   padding: 10px;
@@ -46,6 +51,12 @@ body {
   $background: #2b576d;
   $border: darken($background, 10%);
   @include button-variant($background, $border, $hover-background: darken($background, 7.5%), $hover-border: darken($border, 10%), $active-background: darken($background, 10%), $active-border: darken($border, 12.5%));
+}
+
+footer.app-footer {
+  background-color: darken($body-bg, 5%);
+  border-top: darken($body-bg, 5%);
+  color: #777777;
 }
 
 footer.app-footer div.copyright {
