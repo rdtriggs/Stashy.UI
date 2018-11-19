@@ -3,7 +3,7 @@
     <!--<b-button size="sm" v-on:click="seedData();">Seed Data</b-button>-->
     <ValueCard v-bind:portfolio="portfolio"></ValueCard>
     <AssetCard v-for="(item, index) in portfolio.assets" v-bind:item="item" v-bind:index="index"
-               v-bind:key="item.id" v-bind:tickers="tickers"></AssetCard>
+               v-bind:key="item.id"></AssetCard>
     <AssetModal v-bind:tickers="tickers"></AssetModal>
   </div>
 </template>
